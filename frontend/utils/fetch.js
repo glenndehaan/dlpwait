@@ -1,21 +1,30 @@
 /**
- * Export the fetch function
+ * Request data from the API
  *
- * @param url
- * @param callback
+ * @param endpoint
+ * @param data
+ * @returns {Promise<unknown>}
  */
-export default (url, callback) => {
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                callback(xhr.responseText);
-            } else {
-                console.error(xhr);
-            }
-        }
-    };
+export default (endpoint, data = false) => {
+    return new Promise(resolve => {
+        const params = {
+            method: 'GET'
+        };
 
-    xhr.open("GET", url, true);
-    xhr.send();
+        if(data) {
+            params.method = 'POST';
+            params.headers = {
+                'Content-Type': 'application/json'
+            };
+            params.body = JSON.stringify(data);
+        }
+
+        fetch(endpoint, params)
+            .then(response => response.json())
+            .then(data => resolve(data))
+            .catch(e => {
+                console.error(e);
+                resolve(false);
+            });
+    });
 }

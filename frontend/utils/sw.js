@@ -1,4 +1,4 @@
-import fetch from './fetch';
+import fetch from './xhr';
 
 /**
  * Check if we need to kill the SW by checking a param on the server

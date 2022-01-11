@@ -11,10 +11,14 @@ import Router from 'preact-router';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import Home from './pages/Home';
+import Redirect from './pages/Redirect';
+import Park from './pages/Park';
 
 import storage from './modules/storage';
+
 import {validateServiceWorkerInstance} from './utils/sw';
+import fetch from './utils/fetch';
+import query from './utils/query';
 
 import 'tailwindcss/tailwind.css';
 
@@ -43,6 +47,14 @@ class App extends Component {
     constructor() {
         super();
 
+        this.state = {
+            url: '/',
+            parks: [],
+            attractions: [],
+            entertainment: [],
+            error: false
+        }
+
         window.site = {};
         window.site.production = process.env.NODE_ENV === 'production';
     }
@@ -51,7 +63,37 @@ class App extends Component {
      * Function runs then component mounts
      */
     componentWillMount() {
-        // this.getProjects();
+        this.getData();
+    }
+
+    /**
+     * Get all data from the API
+     */
+    async getData() {
+        const data = await fetch(window.site.production ? 'https://api.dlpwait.com' : 'http://localhost:4001', query);
+
+        if(data) {
+            this.setState({
+                parks: data.data.parks,
+                attractions: data.data.attractions,
+                entertainment: data.data.entertainment
+            });
+        } else {
+            this.setState({
+                error: true
+            });
+        }
+    }
+
+    /**
+     * Handle route updates
+     *
+     * @param e
+     */
+    routerUpdate(e) {
+        this.setState({
+            url: e.url
+        });
     }
 
     /**
@@ -60,20 +102,21 @@ class App extends Component {
      * @returns {*}
      */
     render() {
+        const {url, attractions, entertainment} = this.state;
+
         return (
             <div id="root">
                 <header>
                     <Header/>
                 </header>
                 <main>
-                    <Router>
-                        <Home path="/"/>
-                        <Home path="/disneyland-park"/>
-                        <Home path="/walt-disney-studios-park"/>
+                    <Router onChange={(e) => this.routerUpdate(e)}>
+                        <Park path="/:park" attractions={attractions} entertainment={entertainment}/>
+                        <Redirect path="/" to="/disneyland-park"/>
                     </Router>
                 </main>
                 <footer>
-                    <Footer/>
+                    <Footer url={url}/>
                 </footer>
             </div>
         );
