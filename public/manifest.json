@@ -1,0 +1,89 @@
+{
+  "name": "DLP Wait Times",
+  "short_name": "DLP Wait",
+  "description": "A wait times app for Disneyland Paris",
+  "icons": [
+    {
+      "src": "./images/icon/logo_128x128.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/icon/logo_192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/icon/logo_512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/icon/logo_maskable_128x128.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./images/icon/logo_maskable_192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./images/icon/logo_maskable_512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots" : [
+    {
+      "src": "./screenshots/screenshot1.png",
+      "sizes": "1079x1919",
+      "type": "image/png"
+    },
+    {
+      "src": "./screenshots/screenshot2.png",
+      "sizes": "1079x1919",
+      "type": "image/png"
+    },
+    {
+      "src": "./screenshots/screenshot3.png",
+      "sizes": "1079x1919",
+      "type": "image/png"
+    },
+    {
+      "src": "./screenshots/screenshot4.png",
+      "sizes": "1079x1919",
+      "type": "image/png"
+    },
+    {
+      "src": "./screenshots/screenshot5.png",
+      "sizes": "1079x1919",
+      "type": "image/png"
+    },
+    {
+      "src": "./screenshots/screenshot6.png",
+      "sizes": "1079x1919",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "categories": ["entertainment", "utilities"],
+  "background_color": "#06090f",
+  "theme_color": "#06090f",
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.open_rummy.twa",
+      "id": "com.open_rummy.twa"
+    }
+  ],
+  "iarc_rating_id": "cb2ba07a-6ac7-4c7f-b34c-e915a921b12b"
+}

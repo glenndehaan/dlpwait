@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>DLP Wait Times</title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="A wait times app for Disneyland Paris">
+        <meta name="author" content="DLP Wait Times">
+
+        <meta property="og:title" content="DLP Wait Times"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:image" content="https://dlpwait.com/images/share.jpeg">
+        <meta property="og:url" content="https://dlpwait.com/"/>
+        <meta property="og:description" content="A wait times app for Disneyland Paris"/>
+        <meta name="twitter:card" content="summary_large_image"/>
+
+        <link rel="alternate" href="https://dlpwait.com/" hreflang="en" />
+        <link rel="canonical" href="https://dlpwait.com/" />
+        <script type='application/ld+json'>
+            {
+                "@context": "http://schema.org",
+                "@type": "WebSite",
+                "name": "DLP Wait Times",
+                "url": "https://dlpwait.com/"
+            }
+        </script>
+
+        <link rel="manifest" href="/manifest.json">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="apple-touch-icon" href="/images/icon/logo_512x512.png">
+
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="theme-color" content="#06090f">
+
+        <link rel="stylesheet" type="text/css" href="<%= htmlWebpackPlugin.files.css %>" />
+    </head>
+    <body>
+        <noscript>
+            <div class="no-js-container">
+                <div class="no-js">
+                    Whoops! This website is only available with JavaScript enabled!
+                </div>
+            </div>
+        </noscript>
+        <div id="app"></div>
+        <script type="text/javascript">
+            window.appVer = "<%= htmlWebpackPlugin.files.js %>".split('.')[1];
+        </script>
+        <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js', { scope: '/' });</script>
+        <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js %>"></script>
+    </body>
+</html>
