@@ -8,6 +8,9 @@ if (process.env.NODE_ENV === 'development') {
 import {h, render, Component} from 'preact';
 import Router from 'preact-router';
 
+import Header from './components/Header';
+import Footer from './components/Footer';
+
 import Home from './pages/Home';
 
 import storage from './modules/storage';
@@ -59,13 +62,19 @@ class App extends Component {
     render() {
         return (
             <div id="root">
-                <div>
-                    <div>
-                        <Router>
-                            <Home path="/"/>
-                        </Router>
-                    </div>
-                </div>
+                <header>
+                    <Header/>
+                </header>
+                <main>
+                    <Router>
+                        <Home path="/"/>
+                        <Home path="/disneyland-park"/>
+                        <Home path="/walt-disney-studios-park"/>
+                    </Router>
+                </main>
+                <footer>
+                    <Footer/>
+                </footer>
             </div>
         );
     }
