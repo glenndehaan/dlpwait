@@ -10,6 +10,17 @@ export default {
      */
     getHoursMinutes: (string) => {
         const date = new Date(string);
-        return date.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: false});
+        return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+    },
+
+    /**
+     * Returns a formatted date string
+     *
+     * @param date
+     * @return {string}
+     */
+    getDateFormatted: (date) => {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
+        return date.toLocaleTimeString('en-US', options);
     }
 }

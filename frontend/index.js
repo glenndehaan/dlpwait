@@ -52,6 +52,8 @@ class App extends Component {
             parks: [],
             attractions: [],
             entertainment: [],
+            updated: null,
+            sort: storage.get('sort') || 'NAME_DESC',
             error: false
         }
 
@@ -64,6 +66,11 @@ class App extends Component {
      */
     componentWillMount() {
         this.getData();
+
+        // Get new data every 2 minutes
+        setInterval(() => {
+            this.getData();
+        }, 2 * 60 * 1000);
     }
 
     /**
@@ -76,11 +83,13 @@ class App extends Component {
             this.setState({
                 parks: data.data.parks,
                 attractions: data.data.attractions,
-                entertainment: data.data.entertainment
+                entertainment: data.data.entertainment,
+                updated: new Date()
             });
         } else {
             this.setState({
-                error: true
+                error: true,
+                updated: new Date()
             });
         }
     }
@@ -97,21 +106,32 @@ class App extends Component {
     }
 
     /**
+     * Update the sort
+     *
+     * @param sort
+     */
+    updateSort(sort) {
+        this.setState({
+            sort
+        });
+    }
+
+    /**
      * Preact render function
      *
      * @returns {*}
      */
     render() {
-        const {url, parks, attractions, entertainment} = this.state;
+        const {url, parks, attractions, entertainment, sort, updated} = this.state;
 
         return (
             <div id="root">
                 <header>
-                    <Header url={url} parks={parks}/>
+                    <Header url={url} parks={parks} sort={sort} updated={updated} updateSort={(sort) => this.updateSort(sort)}/>
                 </header>
                 <main>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" attractions={attractions} entertainment={entertainment}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort}/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>
                 </main>

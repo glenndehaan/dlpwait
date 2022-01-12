@@ -37,3 +37,13 @@ footer {
 article {
   grid-template-columns: auto 110px;
 }
+
+.construction-color {
+  background: repeating-linear-gradient(
+      45deg,
+      rgb(217, 119, 6),
+      rgb(217, 119, 6) 10px,
+      black 10px,
+      black 20px
+  );
+}

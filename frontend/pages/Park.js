@@ -8,7 +8,25 @@ export default class Park extends Component {
      * Runs after component mounts
      */
     componentDidMount() {
-        document.title = 'Home | DLP Wait Times';
+        this.updatePageTitle();
+    }
+
+    /**
+     * Runs after component updates
+     */
+    componentDidUpdate() {
+        this.updatePageTitle();
+    }
+
+    /**
+     * Updates the page title
+     */
+    updatePageTitle() {
+        const parkInfo = this.props.parks.find((e) => {
+            return e.slug === this.props.park;
+        });
+
+        document.title = `${parkInfo ? parkInfo.name : 'Park'} | DLP Wait Times`;
     }
 
     /**
@@ -17,9 +35,49 @@ export default class Park extends Component {
      * @returns {*}
      */
     render() {
-        const {attractions, park} = this.props;
+        const {attractions, park, sort} = this.props;
         const parkAttractions = attractions.filter((attraction) => {
             return attraction.park.slug === park && attraction.status !== "UNDEFINED";
+        }).sort((a, b) => {
+            if(sort === "NAME_DESC") {
+                return a.name.localeCompare(b.name);
+            }
+
+            if(sort === "NAME_ASC") {
+                return b.name.localeCompare(a.name);
+            }
+
+            if(sort === "WAIT_TIME_STANDBY_DESC") {
+                return a.waitTime.standby.minutes - b.waitTime.standby.minutes;
+            }
+
+            if(sort === "WAIT_TIME_STANDBY_ASC") {
+                return b.waitTime.standby.minutes - a.waitTime.standby.minutes;
+            }
+
+            if(sort === "SINGLE_RIDER_AVAILABILITY") {
+                return b.waitTime.singleRider.available - a.waitTime.singleRider.available;
+            }
+
+            if(sort === "PREMIER_ACCESS_AVAILABILITY") {
+                return b.premierAccess.available - a.premierAccess.available;
+            }
+
+            if(sort === "ATTRACTION_STATUS") {
+                return b.status.localeCompare(a.status);
+            }
+
+            return 0;
+        }).sort((a, b) => {
+            if(sort === "WAIT_TIME_STANDBY_DESC" || sort === "WAIT_TIME_STANDBY_ASC" || sort === "SINGLE_RIDER_AVAILABILITY" || sort === "PREMIER_ACCESS_AVAILABILITY") {
+                return b.status === "OPERATING" ? 1 : -1;
+            }
+
+            if(sort === "ATTRACTION_STATUS") {
+                return b.status === "OPERATING" ? -1 : 1;
+            }
+
+            return 0;
         });
 
         console.log('parkAttractions', parkAttractions);
@@ -28,7 +86,6 @@ export default class Park extends Component {
             <div className="grid grid-row-auto gap-4 w-full max-w-5xl px-4 mx-auto">
                 {parkAttractions.map((item, key) => (
                     <div key={key}>
-                        {console.log('item.status', item.status)}
                         <article className="grid gap-4 border rounded-lg shadow-lg">
                             <div className="p-4">
                                 <h2 className="font-bold">{item.name}</h2>
@@ -45,7 +102,7 @@ export default class Park extends Component {
                                     }
                                 </div>
                             </div>
-                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center", item.status === "OPERATING" && "bg-green-500", item.status === "REFURBISHMENT" && "bg-red-400", item.status === "DOWN" && "bg-yellow-500")}>
+                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center", item.status === "OPERATING" && "bg-green-500", item.status === "REFURBISHMENT" && "construction-color text-white", (item.status === "CLOSED" || item.status === "CLOSED_OPS") && "bg-red-400", item.status === "DOWN" && "bg-yellow-500")}>
                                 {item.status === "OPERATING" && item.waitTime.singleRider.available &&
                                     <div className="grid grid-rows-2 h-full">
                                         <div className="border-b flex flex-col items-center justify-center">
