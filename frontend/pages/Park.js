@@ -89,8 +89,6 @@ export default class Park extends Component {
             return attraction.name.toLowerCase().includes(search.toLowerCase());
         });
 
-        console.log('parkAttractions', parkAttractions);
-
         return (
             <div className="grid grid-row-auto gap-4 w-full max-w-5xl px-4 mx-auto">
                 {parkAttractions.map((item, key) => (
