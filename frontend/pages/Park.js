@@ -1,4 +1,5 @@
 import {h, Component} from 'preact';
+import clsx from 'clsx';
 
 import date from '../utils/date';
 
@@ -27,6 +28,7 @@ export default class Park extends Component {
             <div className="grid grid-row-auto gap-4">
                 {parkAttractions.map((item, key) => (
                     <div key={key}>
+                        {console.log('item.status', item.status)}
                         <article className="grid gap-4 border rounded-lg shadow-lg">
                             <div className="p-4">
                                 <h2 className="font-bold">{item.name}</h2>
@@ -36,10 +38,17 @@ export default class Park extends Component {
                                         {item.services.photoPass && <span className="bg-gray-200 rounded p-1 mr-1 text-sm">Photo Pass</span>}
                                         {item.services.singleRider && <span className="bg-gray-200 rounded p-1 mr-1 text-sm">Single Rider</span>}
                                     </div>
+                                    {item.status !== "REFURBISHMENT" &&
+                                        <div className="mt-2">
+                                            <span className="bg-blue-300 rounded p-1 mr-1 text-sm">{date.getHoursMinutes(item.openingTime)} - {date.getHoursMinutes(item.closingTime)}</span>
+                                        </div>
+                                    }
                                 </div>
                             </div>
-                            <div className="text-center bg-green-500 p-0 rounded-r-lg flex flex-col justify-center">
-                                {item.waitTime.standby.minutes} min
+                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center", item.status === "OPERATING" && "bg-green-500", item.status === "REFURBISHMENT" && "bg-red-400")}>
+                                {item.status === "OPERATING" && <span>{item.waitTime.standby.minutes} min</span>}
+                                {item.status === "REFURBISHMENT" && <span className="text-sm">Under Construction</span>}
+                                {(item.status === "CLOSED" || item.status === "CLOSED_OPS") && <span>Closed</span>}
                             </div>
                         </article>
                         {item.services.premierAccess &&
