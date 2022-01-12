@@ -12,26 +12,26 @@ export default class Header extends Component {
     render() {
         const {parks, url} = this.props;
 
-        const parkFilter = parks.filter((item) => {
+        const parkFilter = parks.find((item) => {
             return item.slug === url.replace('/', '');
         });
-        const parkOpen = parkFilter[0] ? parkFilter[0].schedules.filter((item) => {
+        const parkOpen = parkFilter ? parkFilter.schedules.find((item) => {
             return item.status === "OPERATING";
-        }) : [];
-        const parkEMT = parkFilter[0] ? parkFilter[0].schedules.filter((item) => {
+        }) : false;
+        const parkEMT = parkFilter ? parkFilter.schedules.find((item) => {
             return item.status === "EXTRA_MAGIC_HOURS";
-        }) : [];
+        }) : false;
 
         return (
             <div className="grid grid-rows-2 grid-cols-2 gap-4 p-2">
-                {parkEMT[0] &&
+                {parkEMT &&
                     <div className="text-center">
-                        Extra Magic Time:<br/>{date.getHoursMinutes(`${parkEMT[0].date}T${parkEMT[0].startTime}`)} - {date.getHoursMinutes(`${parkEMT[0].date}T${parkEMT[0].endTime}`)}
+                        Extra Magic Time:<br/>{date.getHoursMinutes(`${parkEMT.date}T${parkEMT.startTime}`)} - {date.getHoursMinutes(`${parkEMT.date}T${parkEMT.endTime}`)}
                     </div>
                 }
-                {parkOpen[0] &&
-                    <div className={clsx(!parkEMT[0] && "col-span-2", "text-center")}>
-                        Open:<br/>{date.getHoursMinutes(`${parkOpen[0].date}T${parkOpen[0].startTime}`)} - {date.getHoursMinutes(`${parkOpen[0].date}T${parkOpen[0].endTime}`)}
+                {parkOpen &&
+                    <div className={clsx(!parkEMT && "col-span-2", "text-center")}>
+                        Open:<br/>{date.getHoursMinutes(`${parkOpen.date}T${parkOpen.startTime}`)} - {date.getHoursMinutes(`${parkOpen.date}T${parkOpen.endTime}`)}
                     </div>
                 }
                 <div>
