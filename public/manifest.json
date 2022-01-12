@@ -78,12 +78,6 @@
   "categories": ["entertainment", "utilities"],
   "background_color": "#06090f",
   "theme_color": "#06090f",
-  "related_applications": [
-    {
-      "platform": "play",
-      "url": "https://play.google.com/store/apps/details?id=com.open_rummy.twa",
-      "id": "com.open_rummy.twa"
-    }
-  ],
-  "iarc_rating_id": "cb2ba07a-6ac7-4c7f-b34c-e915a921b12b"
+  "related_applications": [],
+  "iarc_rating_id": ""
 }
