@@ -53,6 +53,7 @@ class App extends Component {
             attractions: [],
             entertainment: [],
             updated: null,
+            search: storage.get('search') || '',
             sort: storage.get('sort') || 'NAME_DESC',
             error: false
         }
@@ -117,8 +118,23 @@ class App extends Component {
      * @param sort
      */
     updateSort(sort) {
+        storage.set('sort', sort);
+
         this.setState({
             sort
+        });
+    }
+
+    /**
+     * Update the search
+     *
+     * @param string
+     */
+    updateSearch(string) {
+        storage.set('search', string);
+
+        this.setState({
+            search: string
         });
     }
 
@@ -128,16 +144,16 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {url, parks, attractions, entertainment, sort, updated} = this.state;
+        const {url, parks, attractions, entertainment, sort, search, updated} = this.state;
 
         return (
             <div id="root">
                 <header>
-                    <Header url={url} parks={parks} sort={sort} updated={updated} updateSort={(sort) => this.updateSort(sort)}/>
+                    <Header url={url} parks={parks} sort={sort} updated={updated} search={search} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)}/>
                 </header>
                 <main ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort} search={search}/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>
                 </main>

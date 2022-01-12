@@ -35,7 +35,7 @@ export default class Park extends Component {
      * @returns {*}
      */
     render() {
-        const {attractions, park, sort} = this.props;
+        const {attractions, park, sort, search} = this.props;
         const parkAttractions = attractions.filter((attraction) => {
             return attraction.park.slug === park && attraction.status !== "UNDEFINED";
         }).sort((a, b) => {
@@ -78,6 +78,8 @@ export default class Park extends Component {
             }
 
             return 0;
+        }).filter((attraction) => {
+            return attraction.name.toLowerCase().includes(search.toLowerCase());
         });
 
         console.log('parkAttractions', parkAttractions);

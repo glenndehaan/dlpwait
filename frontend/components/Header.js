@@ -1,7 +1,6 @@
 import {h, Component} from 'preact';
 import clsx from 'clsx';
 
-import storage from '../modules/storage';
 import date from '../utils/date';
 
 export default class Header extends Component {
@@ -11,8 +10,16 @@ export default class Header extends Component {
      * @param e
      */
     updateSort(e) {
-        storage.set('sort', e.target.value);
         this.props.updateSort(e.target.value);
+    }
+
+    /**
+     * Update the search
+     *
+     * @param e
+     */
+    updateSearch(e) {
+        this.props.updateSearch(e.target.value);
     }
 
     /**
@@ -21,7 +28,7 @@ export default class Header extends Component {
      * @returns {*}
      */
     render() {
-        const {parks, url, sort, updated} = this.props;
+        const {parks, url, sort, search, updated} = this.props;
 
         const parkFilter = parks.find((item) => {
             return item.slug === url.replace('/', '');
@@ -47,7 +54,7 @@ export default class Header extends Component {
                 }
                 <div>
                     <label htmlFor="search" style={{ position: 'absolute', top: '-1000px', left: '-1000px' }}>Search Activities</label>
-                    <input type="text" id="search" placeholder="Search" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"/>
+                    <input type="text" id="search" placeholder="Search" value={search} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" onKeyUp={(e) => this.updateSearch(e)}/>
                 </div>
                 <div>
                     <label htmlFor="sort" style={{ position: 'absolute', top: '-1000px', left: '-1000px' }}>Sort Activities</label>
