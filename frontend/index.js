@@ -59,6 +59,8 @@ class App extends Component {
 
         window.site = {};
         window.site.production = process.env.NODE_ENV === 'production';
+
+        this.mainDiv = null;
     }
 
     /**
@@ -100,6 +102,10 @@ class App extends Component {
      * @param e
      */
     routerUpdate(e) {
+        if(this.mainDiv !== null) {
+            this.mainDiv.scrollTop = 0;
+        }
+
         this.setState({
             url: e.url
         });
@@ -129,7 +135,7 @@ class App extends Component {
                 <header>
                     <Header url={url} parks={parks} sort={sort} updated={updated} updateSort={(sort) => this.updateSort(sort)}/>
                 </header>
-                <main>
+                <main ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
                         <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort}/>
                         <Redirect path="/" to="/disneyland-park"/>
