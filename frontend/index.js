@@ -163,7 +163,7 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {url, parks, attractions, entertainment, sort, search, updated, updateAvailableDialog} = this.state;
+        const {error, url, parks, attractions, entertainment, sort, search, updated, updateAvailableDialog} = this.state;
 
         return (
             <div id="root">
@@ -175,7 +175,7 @@ class App extends Component {
                 </header>
                 <main ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort} search={search}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort} search={search} error={error}/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>
                 </main>

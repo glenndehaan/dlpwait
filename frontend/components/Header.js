@@ -41,7 +41,7 @@ export default class Header extends Component {
         }) : false;
 
         return (
-            <div className="grid grid-rows-2 grid-cols-2 gap-1 p-2 px-4">
+            <div className={clsx("grid grid-rows-2 grid-cols-2 gap-1 p-2 px-4", !parkOpen && !parkEMT && "grid-rows-1")}>
                 {parkEMT &&
                     <div className="text-center">
                         Extra Magic Time:<br/>{date.getHoursMinutes(`${parkEMT.date}T${parkEMT.startTime}`)} - {date.getHoursMinutes(`${parkEMT.date}T${parkEMT.endTime}`)}

@@ -1,6 +1,8 @@
 import {h, Component} from 'preact';
 import clsx from 'clsx';
 
+import Error from '../components/Error';
+
 import date from '../utils/date';
 
 export default class Park extends Component {
@@ -35,7 +37,12 @@ export default class Park extends Component {
      * @returns {*}
      */
     render() {
-        const {attractions, park, sort, search} = this.props;
+        const {error, attractions, park, sort, search} = this.props;
+
+        if(error) {
+            return <Error/>
+        }
+
         const parkAttractions = attractions.filter((attraction) => {
             return attraction.park.slug === park && attraction.status !== "UNDEFINED";
         }).sort((a, b) => {
