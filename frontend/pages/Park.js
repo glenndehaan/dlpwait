@@ -45,10 +45,12 @@ export default class Park extends Component {
                                     }
                                 </div>
                             </div>
-                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center", item.status === "OPERATING" && "bg-green-500", item.status === "REFURBISHMENT" && "bg-red-400")}>
-                                {item.status === "OPERATING" && <span>{item.waitTime.standby.minutes} min</span>}
-                                {item.status === "REFURBISHMENT" && <span className="text-sm">Under Construction</span>}
-                                {(item.status === "CLOSED" || item.status === "CLOSED_OPS") && <span>Closed</span>}
+                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center", item.status === "OPERATING" && "bg-green-500", item.status === "REFURBISHMENT" && "bg-red-400", item.status === "DOWN" && "bg-yellow-500")}>
+                                {item.status === "OPERATING" && <div><span className="font-bold">Standby:</span><br/>{item.waitTime.standby.minutes} min</div>}
+                                {item.status === "OPERATING" && item.waitTime.singleRider.available && <div className="border-t pt-1 mx-2"><span className="font-bold mt-4">Single Rider:</span><br/>{item.waitTime.singleRider.minutes} min</div>}
+                                {item.status === "DOWN" && <div className="text-sm font-bold">Temporary Closed (Breakdown)</div>}
+                                {item.status === "REFURBISHMENT" && <div className="text-sm font-bold">Under Construction</div>}
+                                {(item.status === "CLOSED" || item.status === "CLOSED_OPS") && <div className="font-bold">Closed</div>}
                             </div>
                         </article>
                         {item.services.premierAccess &&
