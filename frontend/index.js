@@ -10,6 +10,7 @@ import Router from 'preact-router';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Dialog from './components/Dialog';
 
 import Redirect from './pages/Redirect';
 import Park from './pages/Park';
@@ -47,6 +48,16 @@ class App extends Component {
     constructor() {
         super();
 
+        if ('serviceWorker' in navigator) {
+            if(navigator.serviceWorker.controller !== null) {
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    this.setState({
+                        updateAvailableDialog: true
+                    });
+                });
+            }
+        }
+
         this.state = {
             url: '/',
             parks: [],
@@ -55,7 +66,8 @@ class App extends Component {
             updated: null,
             search: storage.get('search') || '',
             sort: storage.get('sort') || 'NAME_DESC',
-            error: false
+            error: false,
+            updateAvailableDialog: false
         }
 
         window.site = {};
@@ -139,15 +151,25 @@ class App extends Component {
     }
 
     /**
+     * Updates the app
+     */
+    update() {
+        window.location.reload();
+    }
+
+    /**
      * Preact render function
      *
      * @returns {*}
      */
     render() {
-        const {url, parks, attractions, entertainment, sort, search, updated} = this.state;
+        const {url, parks, attractions, entertainment, sort, search, updated, updateAvailableDialog} = this.state;
 
         return (
             <div id="root">
+                {updateAvailableDialog &&
+                    <Dialog title="Update Ready!" description="Sorry for the interruption but we have an important update available... Click the update button below to update now." button="Update" onClick={() => this.update()}/>
+                }
                 <header>
                     <Header url={url} parks={parks} sort={sort} updated={updated} search={search} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)}/>
                 </header>
