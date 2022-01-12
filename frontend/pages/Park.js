@@ -17,8 +17,8 @@ export default class Park extends Component {
      */
     render() {
         const {attractions, park} = this.props;
-        const parkAttractions = attractions.filter((i) => {
-            return i.park.slug === park;
+        const parkAttractions = attractions.filter((attraction) => {
+            return attraction.park.slug === park && attraction.status !== "UNDEFINED";
         });
 
         console.log('parkAttractions', parkAttractions);
@@ -44,7 +44,7 @@ export default class Park extends Component {
                         </article>
                         {item.services.premierAccess &&
                             <div className="border border-t-0 text-center bg-gradient-to-r from-red-500 to-red-400 text-white p-0 rounded-b-lg mx-10 row-span-1 shadow-lg">
-                                <div className="text-lg font-bold border-b mb-2">Premier Access</div>
+                                <div className="flex flex-col justify-center text-lg font-bold border-b w-3/4 m-auto mb-2">Premier Access</div>
                                 {!item.premierAccess.available &&
                                     <div>There are no passes available!</div>
                                 }

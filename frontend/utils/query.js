@@ -8,6 +8,7 @@ export default {
                 name
                 slug
                 schedules {
+                    status
                     startTime
                     endTime
                     date

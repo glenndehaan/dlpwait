@@ -102,12 +102,12 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {url, attractions, entertainment} = this.state;
+        const {url, parks, attractions, entertainment} = this.state;
 
         return (
             <div id="root">
                 <header>
-                    <Header/>
+                    <Header url={url} parks={parks}/>
                 </header>
                 <main>
                     <Router onChange={(e) => this.routerUpdate(e)}>
