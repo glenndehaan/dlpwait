@@ -28,7 +28,7 @@ export default class Park extends Component {
                 {parkAttractions.map((item, key) => (
                     <div key={key}>
                         <article className="grid gap-4 border rounded-lg shadow-lg">
-                            <div className="p-2">
+                            <div className="p-4">
                                 <h2 className="font-bold">{item.name}</h2>
                                 <div className="mt-2">
                                     <span className="text-sm">{item.region}</span>
@@ -43,7 +43,7 @@ export default class Park extends Component {
                             </div>
                         </article>
                         {item.services.premierAccess &&
-                            <div className="border border-t-0 text-center bg-gradient-to-r from-red-500 to-red-400 text-white p-0 rounded-b-lg mx-10 row-span-1 shadow-lg">
+                            <div className="border border-t-0 text-center bg-gradient-to-r from-red-500 to-red-400 text-white rounded-b-lg mx-10 row-span-1 shadow-lg p-2">
                                 <div className="flex flex-col justify-center text-lg font-bold border-b w-3/4 m-auto mb-2">Premier Access</div>
                                 {!item.premierAccess.available &&
                                     <div>There are no passes available!</div>

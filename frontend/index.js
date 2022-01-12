@@ -70,7 +70,7 @@ class App extends Component {
      * Get all data from the API
      */
     async getData() {
-        const data = await fetch(window.site.production ? 'https://api.dlpwait.com' : 'http://localhost:4001', query);
+        const data = await fetch(window.site.production ? 'https://api.dlpwait.com' : `http://${window.location.hostname}:4001`, query);
 
         if(data) {
             this.setState({
