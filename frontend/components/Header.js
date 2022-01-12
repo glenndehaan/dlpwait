@@ -23,7 +23,7 @@ export default class Header extends Component {
         }) : false;
 
         return (
-            <div className="grid grid-rows-2 grid-cols-2 gap-4 p-2">
+            <div className="grid grid-rows-2 grid-cols-2 gap-4 p-2 px-4">
                 {parkEMT &&
                     <div className="text-center">
                         Extra Magic Time:<br/>{date.getHoursMinutes(`${parkEMT.date}T${parkEMT.startTime}`)} - {date.getHoursMinutes(`${parkEMT.date}T${parkEMT.endTime}`)}
@@ -35,11 +35,16 @@ export default class Header extends Component {
                     </div>
                 }
                 <div>
-                    <input type="text" placeholder="Search" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline dark:bg-neutral-800 dark:border-neutral-700 dark:text-gray-100"/>
+                    <input type="text" placeholder="Search" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"/>
                 </div>
                 <div>
-                    <select className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline dark:bg-neutral-800 dark:border-neutral-700 dark:text-gray-100">
-                        <option disabled selected>Sort</option>
+                    <select className="shadow border rounded w-full py-2 px-3 text-gray-700 mt-1 bg-white leading-tight focus:outline-none focus:shadow-outline">
+                        <option selected value="NAME_DESC">A-Z</option>
+                        <option value="NAME_ASC">Z-A</option>
+                        <option value="WAIT_TIME_STANDBY_DESC">Shortest Standby Wait Time</option>
+                        <option value="WAIT_TIME_STANDBY_ASC">Longest Standby Wait Time</option>
+                        <option value="WAIT_TIME_SINGLE_RIDER_DESC">Single Rider Availability</option>
+                        <option value="PREMIER_ACCESS_DESC">Premier Access Availability</option>
                     </select>
                 </div>
             </div>

@@ -25,7 +25,7 @@ export default class Park extends Component {
         console.log('parkAttractions', parkAttractions);
 
         return (
-            <div className="grid grid-row-auto gap-4">
+            <div className="grid grid-row-auto gap-4 w-full max-w-5xl px-4 mx-auto">
                 {parkAttractions.map((item, key) => (
                     <div key={key}>
                         {console.log('item.status', item.status)}
@@ -46,8 +46,19 @@ export default class Park extends Component {
                                 </div>
                             </div>
                             <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center", item.status === "OPERATING" && "bg-green-500", item.status === "REFURBISHMENT" && "bg-red-400", item.status === "DOWN" && "bg-yellow-500")}>
-                                {item.status === "OPERATING" && <div><span className="font-bold">Standby:</span><br/>{item.waitTime.standby.minutes} min</div>}
-                                {item.status === "OPERATING" && item.waitTime.singleRider.available && <div className="border-t pt-1 mx-2"><span className="font-bold mt-4">Single Rider:</span><br/>{item.waitTime.singleRider.minutes} min</div>}
+                                {item.status === "OPERATING" && item.waitTime.singleRider.available &&
+                                    <div className="grid grid-rows-2 h-full">
+                                        <div className="border-b flex flex-col items-center justify-center">
+                                            <span className="font-bold">Standby:</span>
+                                            <span>{item.waitTime.standby.minutes} min</span>
+                                        </div>
+                                        <div className="flex flex-col items-center justify-center">
+                                            <span className="font-bold">Single Rider:</span>
+                                            <span>{item.waitTime.singleRider.minutes} min</span>
+                                        </div>
+                                    </div>
+                                }
+                                {item.status === "OPERATING" && !item.waitTime.singleRider.available && <div><span className="font-bold">Standby:</span><br/>{item.waitTime.standby.minutes} min</div>}
                                 {item.status === "DOWN" && <div className="text-sm font-bold">Temporary Closed (Breakdown)</div>}
                                 {item.status === "REFURBISHMENT" && <div className="text-sm font-bold">Under Construction</div>}
                                 {(item.status === "CLOSED" || item.status === "CLOSED_OPS") && <div className="font-bold">Closed</div>}
