@@ -85,7 +85,6 @@
     "rimraf": "^3.0.0",
     "sass-loader": "^11.0.1",
     "tailwindcss": "^2.2.19",
-    "unistore": "^3.5.1",
     "uuid": "^8.3.2",
     "webpack": "^5.25.0",
     "webpack-bundle-analyzer": "^4.4.0",
