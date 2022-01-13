@@ -66,6 +66,7 @@ class App extends Component {
             updated: null,
             search: storage.get('search') || '',
             sort: storage.get('sort') || 'NAME_DESC',
+            fetch: false,
             error: false,
             updateAvailableDialog: false
         }
@@ -96,6 +97,7 @@ class App extends Component {
 
         if(data) {
             this.setState({
+                fetch: true,
                 parks: data.data.parks,
                 attractions: data.data.attractions,
                 entertainment: data.data.entertainment,
@@ -103,6 +105,7 @@ class App extends Component {
             });
         } else {
             this.setState({
+                fetch: true,
                 error: true,
                 updated: new Date()
             });
@@ -163,7 +166,12 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {error, url, parks, attractions, entertainment, sort, search, updated, updateAvailableDialog} = this.state;
+        const {fetch, error, url, parks, attractions, entertainment, sort, search, updated, updateAvailableDialog} = this.state;
+
+        // Prevent layout shifts
+        if(!fetch) {
+            return null;
+        }
 
         return (
             <div id="root" className="bg-white dark:bg-gray-900 dark:text-gray-100">
