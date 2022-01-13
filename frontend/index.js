@@ -166,7 +166,7 @@ class App extends Component {
         const {error, url, parks, attractions, entertainment, sort, search, updated, updateAvailableDialog} = this.state;
 
         return (
-            <div id="root">
+            <div id="root" className="bg-white dark:bg-gray-900 dark:text-gray-100">
                 {updateAvailableDialog &&
                     <Dialog title="Update Ready!" description="Sorry for the interruption but we have an important update available... Click the update button below to update now." button="Update" onClick={() => this.update()}/>
                 }

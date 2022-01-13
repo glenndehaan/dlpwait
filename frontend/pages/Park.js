@@ -93,23 +93,23 @@ export default class Park extends Component {
             <div className="grid grid-row-auto gap-4 w-full max-w-5xl px-4 mx-auto">
                 {parkAttractions.map((item, key) => (
                     <div key={key}>
-                        <article className="grid gap-4 border rounded-lg shadow-lg">
+                        <article className="grid gap-4 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
                             <div className="p-4">
                                 <h2 className="font-bold">{item.name}</h2>
                                 <div className="mt-2">
                                     <span className="text-sm">{item.region}</span>
                                     <div>
-                                        {item.services.photoPass && <span className="bg-gray-200 rounded p-1 mr-1 text-sm">Photo Pass</span>}
-                                        {item.services.singleRider && <span className="bg-gray-200 rounded p-1 mr-1 text-sm">Single Rider</span>}
+                                        {item.services.photoPass && <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black">Photo Pass</span>}
+                                        {item.services.singleRider && <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black">Single Rider</span>}
                                     </div>
                                     {item.status !== "REFURBISHMENT" &&
                                         <div className="mt-2">
-                                            <span className="bg-blue-300 rounded p-1 mr-1 text-sm">{date.getHoursMinutes(item.openingTime)} - {date.getHoursMinutes(item.closingTime)}</span>
+                                            <span className="bg-blue-300 rounded p-1 mr-1 text-sm text-black">{date.getHoursMinutes(item.openingTime)} - {date.getHoursMinutes(item.closingTime)}</span>
                                         </div>
                                     }
                                 </div>
                             </div>
-                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center", item.status === "OPERATING" && "bg-green-500", item.status === "REFURBISHMENT" && "construction-color text-white", (item.status === "CLOSED" || item.status === "CLOSED_OPS") && "bg-red-400", item.status === "DOWN" && "bg-yellow-500")}>
+                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center text-white", item.status === "OPERATING" && "bg-green-600", item.status === "REFURBISHMENT" && "construction-color", (item.status === "CLOSED" || item.status === "CLOSED_OPS") && "bg-red-400", item.status === "DOWN" && "bg-yellow-500")}>
                                 {item.status === "OPERATING" && item.waitTime.singleRider.available &&
                                     <div className="grid grid-rows-2 h-full">
                                         <div className="border-b flex flex-col items-center justify-center">
@@ -129,7 +129,7 @@ export default class Park extends Component {
                             </div>
                         </article>
                         {item.services.premierAccess &&
-                            <div className="border border-t-0 text-center bg-gradient-to-r from-red-500 to-red-400 text-white rounded-b-lg mx-10 row-span-1 shadow-lg p-2">
+                            <div className="border border-t-0 text-center bg-gradient-to-r from-red-500 to-red-400 text-white rounded-b-lg mx-10 row-span-1 shadow-lg p-2 dark:border-gray-700">
                                 <div className="flex flex-col justify-center text-lg font-bold border-b w-3/4 m-auto mb-2">Premier Access</div>
                                 {!item.premierAccess.available &&
                                     <div>There are no passes available!</div>
