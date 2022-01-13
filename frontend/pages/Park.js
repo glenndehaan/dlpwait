@@ -109,7 +109,7 @@ export default class Park extends Component {
                                     }
                                 </div>
                             </div>
-                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center text-white", item.status === "OPERATING" && "bg-green-600", item.status === "REFURBISHMENT" && "construction-color", (item.status === "CLOSED" || item.status === "CLOSED_OPS") && "bg-red-400", item.status === "DOWN" && "bg-yellow-500")}>
+                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center text-white", item.status === "OPERATING" && "bg-green-700", item.status === "REFURBISHMENT" && "construction-color", (item.status === "CLOSED" || item.status === "CLOSED_OPS") && "bg-red-800", item.status === "DOWN" && "bg-yellow-700")}>
                                 {item.status === "OPERATING" && item.waitTime.singleRider.available &&
                                     <div className="grid grid-rows-2 h-full">
                                         <div className="border-b flex flex-col items-center justify-center">
