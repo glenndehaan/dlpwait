@@ -2,25 +2,26 @@
  * Request data from the API
  *
  * @param endpoint
- * @param data
+ * @param body
+ * @param text
  * @returns {Promise<unknown>}
  */
-export default (endpoint, data = false) => {
+export default (endpoint, body = false, text = false) => {
     return new Promise(resolve => {
         const params = {
             method: 'GET'
         };
 
-        if(data) {
+        if(body) {
             params.method = 'POST';
             params.headers = {
                 'Content-Type': 'application/json'
             };
-            params.body = JSON.stringify(data);
+            params.body = JSON.stringify(body);
         }
 
         fetch(endpoint, params)
-            .then(response => response.json())
+            .then(response => !text ? response.json() : response.text())
             .then(data => resolve(data))
             .catch(e => {
                 console.error(e);

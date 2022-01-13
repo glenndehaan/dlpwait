@@ -1,3 +1,13 @@
+html, body {
+  background-color: rgb(255, 255, 255);
+}
+
+@media (prefers-color-scheme: dark) {
+  html, body {
+    background-color: rgb(17, 24, 39);
+  }
+}
+
 #root {
   height: 100vh;
 

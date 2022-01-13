@@ -37,10 +37,18 @@ export default class Park extends Component {
      * @returns {*}
      */
     render() {
-        const {error, attractions, park, sort, search} = this.props;
+        const {error, attractions, park, parks, sort, search} = this.props;
 
         if(error) {
             return <Error/>
+        }
+
+        const parkCheck = parks.find((item) => {
+            return item.slug === park;
+        });
+
+        if(typeof parkCheck === "undefined") {
+            return <Error park={true}/>
         }
 
         const parkAttractions = attractions.filter((attraction) => {
