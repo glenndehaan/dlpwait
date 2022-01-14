@@ -73,7 +73,7 @@ export default class Attractions extends Component {
                                 <h2 className="font-bold">{item.name}</h2>
                                 <div className="mt-1">
                                     <span className="text-sm">{item.region}</span>
-                                    <div className="grid gap-2 grid-row-auto mt-4 w-32">
+                                    <div className="grid gap-2 grid-row-auto mt-4 w-36">
                                         {item.services.photoPass &&
                                             <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black inline-block h-8 align-middle">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current inline-block h-6 w-6 align-middle mr-1">
