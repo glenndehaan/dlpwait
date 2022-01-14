@@ -48,6 +48,12 @@ article {
   grid-template-columns: auto 110px;
 }
 
+.grid-title-bar {
+  display: grid;
+  grid-template-columns: 1fr 45px 45px 45px;
+  gap: 5px;
+}
+
 .construction-color {
   background: repeating-linear-gradient(
       45deg,

@@ -66,6 +66,7 @@ class App extends Component {
             updated: null,
             search: storage.get('search') || '',
             sort: storage.get('sort') || 'NAME_DESC',
+            entertainmentView: storage.get('entertainment_view') || false,
             fetch: false,
             error: false,
             updateAvailableDialog: false
@@ -98,6 +99,7 @@ class App extends Component {
         if(data) {
             this.setState({
                 fetch: true,
+                error: false,
                 parks: data.data.parks,
                 attractions: data.data.attractions,
                 entertainment: data.data.entertainment,
@@ -154,6 +156,17 @@ class App extends Component {
     }
 
     /**
+     * Switches between the attractions and entertainment views
+     */
+    switchViews() {
+        storage.set('entertainment_view', !this.state.entertainmentView);
+
+        this.setState({
+            entertainmentView: !this.state.entertainmentView
+        });
+    }
+
+    /**
      * Updates the app
      */
     update() {
@@ -166,7 +179,7 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {fetch, error, url, parks, attractions, entertainment, sort, search, updated, updateAvailableDialog} = this.state;
+        const {fetch, error, url, parks, attractions, entertainment, sort, search, entertainmentView, updated, updateAvailableDialog} = this.state;
 
         // Prevent layout shifts
         if(!fetch) {
@@ -179,11 +192,11 @@ class App extends Component {
                     <Dialog title="Update Ready!" description="Sorry for the interruption but we have an important update available... Click the update button below to update now." button="Update" onClick={() => this.update()}/>
                 }
                 <header>
-                    <Header url={url} parks={parks} sort={sort} updated={updated} search={search} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)}/>
+                    <Header url={url} parks={parks} sort={sort} updated={updated} search={search} entertainmentView={entertainmentView} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
                 </header>
                 <main ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort} search={search} error={error}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort} search={search} entertainmentView={entertainmentView} error={error}/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>
                 </main>
