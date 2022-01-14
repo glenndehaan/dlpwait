@@ -89,7 +89,7 @@ export default class Header extends Component {
                 </div>
                 <div className="relative inline-block w-full">
                     <label htmlFor="sort" style={{ position: 'absolute', top: '-1000px', left: '-1000px' }}>Sort Activities</label>
-                    <select id="sort" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 bg-white leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white" onChange={(e) => this.updateSort(e)}>
+                    <select id="sort" className="shadow appearance-none border rounded w-full py-2 px-3 pr-7 text-gray-700 mt-1 bg-white leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white" onChange={(e) => this.updateSort(e)}>
                         <option selected={sort === "NAME_DESC"} value="NAME_DESC">A-Z</option>
                         <option selected={sort === "NAME_ASC"} value="NAME_ASC">Z-A</option>
                         <option disabled={entertainmentView} selected={sort === "WAIT_TIME_STANDBY_DESC"} value="WAIT_TIME_STANDBY_DESC">Shortest Standby Wait Time</option>
