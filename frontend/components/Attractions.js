@@ -71,17 +71,36 @@ export default class Attractions extends Component {
                         <article type="attraction" className="grid gap-4 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
                             <div className="p-4">
                                 <h2 className="font-bold">{item.name}</h2>
-                                <div className="mt-2">
+                                <div className="mt-1">
                                     <span className="text-sm">{item.region}</span>
-                                    <div>
-                                        {item.services.photoPass && <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black">Photo Pass</span>}
-                                        {item.services.singleRider && <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black">Single Rider</span>}
+                                    <div className="grid gap-2 grid-row-auto mt-4 w-32">
+                                        {item.services.photoPass &&
+                                            <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black inline-block h-8 align-middle">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current inline-block h-6 w-6 align-middle mr-1">
+                                                    <circle cx="12" cy="12" r="3.2"/>
+                                                    <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+                                                </svg>
+                                                Photo Pass
+                                            </span>
+                                        }
+                                        {item.services.singleRider &&
+                                            <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black inline-block h-8 align-middle">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current inline-block h-6 w-6 align-middle mr-1">
+                                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                                </svg>
+                                                Single Rider
+                                            </span>
+                                        }
+                                        {item.status !== "REFURBISHMENT" &&
+                                            <span className="bg-blue-300 rounded p-1 mr-1 text-sm text-black inline-block h-8 align-middle">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current inline-block h-6 w-6 align-middle mr-1">
+                                                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+                                                    <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                                                </svg>
+                                                {date.getHoursMinutes(item.openingTime)} - {date.getHoursMinutes(item.closingTime)}
+                                            </span>
+                                        }
                                     </div>
-                                    {item.status !== "REFURBISHMENT" &&
-                                        <div className="mt-2">
-                                            <span className="bg-blue-300 rounded p-1 mr-1 text-sm text-black">{date.getHoursMinutes(item.openingTime)} - {date.getHoursMinutes(item.closingTime)}</span>
-                                        </div>
-                                    }
                                 </div>
                             </div>
                             <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center text-white", item.status === "OPERATING" && "bg-green-700", item.status === "REFURBISHMENT" && "construction-color", (item.status === "CLOSED" || item.status === "CLOSED_OPS") && "bg-red-800", item.status === "DOWN" && "bg-yellow-700")}>

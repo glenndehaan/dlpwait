@@ -41,11 +41,26 @@ export default class Entertainment extends Component {
                         <article type="entertainment" className="grid gap-4 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
                             <div className="p-4">
                                 <h2 className="font-bold">{item.name}</h2>
-                                <div className="mt-2">
+                                <div className="mt-1">
                                     <span className="text-sm">{item.region}</span>
-                                    <div>
-                                        {item.services.photoPass && <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black">Photo Pass</span>}
-                                        {item.services.singleRider && <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black">Single Rider</span>}
+                                    <div className="grid gap-2 grid-row-auto mt-4 w-32">
+                                        {item.services.photoPass &&
+                                            <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black inline-block h-8 align-middle">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current inline-block h-6 w-6 align-middle mr-1">
+                                                    <circle cx="12" cy="12" r="3.2"/>
+                                                    <path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+                                                </svg>
+                                                Photo Pass
+                                            </span>
+                                        }
+                                        {item.services.singleRider &&
+                                            <span className="bg-gray-200 rounded p-1 mr-1 text-sm text-black inline-block h-8 align-middle">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current inline-block h-6 w-6 align-middle mr-1">
+                                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                                </svg>
+                                                Single Rider
+                                            </span>
+                                        }
                                     </div>
                                 </div>
                             </div>
