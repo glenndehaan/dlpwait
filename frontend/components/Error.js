@@ -7,7 +7,7 @@ export default class Error extends Component {
      * @returns {*}
      */
     render() {
-        const {park} = this.props;
+        const {message} = this.props;
 
         return (
             <div className="flex-1 px-12 py-24 flex flex-col justify-center items-center text-primary">
@@ -17,8 +17,7 @@ export default class Error extends Component {
                     </svg>
                 </span>
                 <h2 className="pt-6 text-2xl font-bold tracking-wide text-center">Oh no!?</h2>
-                {!park && <p className="text-accent-6 px-10 text-center pt-2">It seems we are unable to connect to the server at the moment. Please try again later...</p>}
-                {park && <p className="text-accent-6 px-10 text-center pt-2">It seems we can&apos;t recognize this park? Please check the URL!</p>}
+                <p className="text-accent-6 px-10 text-center pt-2">{message}</p>
             </div>
         );
     }

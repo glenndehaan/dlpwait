@@ -44,8 +44,12 @@ footer {
   z-index: 100;
 }
 
-article {
+article[type="attraction"] {
   grid-template-columns: auto 110px;
+}
+
+article[type="entertainment"] {
+  grid-template-columns: auto 150px;
 }
 
 .grid-title-bar {
