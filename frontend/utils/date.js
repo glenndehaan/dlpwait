@@ -22,5 +22,17 @@ export default {
     getDateFormatted: (date) => {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
         return date.toLocaleTimeString('en-US', options);
+    },
+
+    /**
+     * Check if we are passed the giving date/time
+     *
+     * @param date
+     */
+    checkPassedDateTime: (date) => {
+        const currentDateTime = new Date().getTime();
+        const askedDateTime = new Date(date).getTime();
+
+        return currentDateTime > askedDateTime;
     }
 }

@@ -16,6 +16,17 @@ export default class Entertainment extends Component {
 
         const parkEntertainment = entertainment.filter((entertainment) => {
             return entertainment.park.slug === park && entertainment.schedules.length > 0;
+        }).filter((entertainment) => {
+            let items = 0;
+
+            for(let item = 0; item < entertainment.schedules.length; item++) {
+                const event = entertainment.schedules[item];
+                if(!date.checkPassedDateTime(`${event.date}T${event.startTime}`)) {
+                    items++;
+                }
+            }
+
+            return items > 0;
         }).sort((a, b) => {
             if(sort === "NAME_DESC") {
                 return a.name.localeCompare(b.name);
@@ -66,11 +77,17 @@ export default class Entertainment extends Component {
                             </div>
                             <div className="p-0 rounded-r-lg flex flex-col justify-center text-white bg-blue-600">
                                 <div className="grid grid-rows-auto px-1 py-2 gap-2">
-                                    {item.schedules.map((event, key) => (
-                                        <div key={key} className="flex flex-col justify-center">
-                                            <span className="font-bold text-left">{event.language !== "" && <Flags lang={event.language}/>} {date.getHoursMinutes(`${event.date}T${event.startTime}`)} - {date.getHoursMinutes(`${event.date}T${event.endTime}`)}</span>
-                                        </div>
-                                    ))}
+                                    {item.schedules.map((event, key) => {
+                                        if(!date.checkPassedDateTime(`${event.date}T${event.startTime}`)) {
+                                            return (
+                                                <div key={key} className="flex flex-col justify-center">
+                                                    <span className="font-bold text-left">{event.language !== "" && <Flags lang={event.language}/>} {date.getHoursMinutes(`${event.date}T${event.startTime}`)} - {date.getHoursMinutes(`${event.date}T${event.endTime}`)}</span>
+                                                </div>
+                                            )
+                                        }
+
+                                        return null;
+                                    })}
                                 </div>
                             </div>
                         </article>
