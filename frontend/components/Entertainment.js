@@ -64,8 +64,8 @@ export default class Entertainment extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={"p-0 rounded-r-lg flex flex-col justify-center text-white bg-blue-600"}>
-                                <div className="grid grid-rows-2 h-full px-1 py-2 gap-2">
+                            <div className="p-0 rounded-r-lg flex flex-col justify-center text-white bg-blue-600">
+                                <div className="grid grid-rows-auto px-1 py-2 gap-2">
                                     {item.schedules.map((event, key) => (
                                         <div key={key} className="flex flex-col justify-center">
                                             <span className="font-bold text-left">{event.language !== "" && <Flags lang={event.language}/>} {date.getHoursMinutes(`${event.date}T${event.startTime}`)} - {date.getHoursMinutes(`${event.date}T${event.endTime}`)}</span>
