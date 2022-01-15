@@ -49,7 +49,12 @@ article[type="attraction"] {
 }
 
 article[type="entertainment"] {
-  grid-template-columns: auto 160px;
+  grid-template-columns: auto min-content;
+}
+
+.grid-services {
+  grid-template-columns: min-content;
+  white-space: nowrap;
 }
 
 .grid-title-bar {
