@@ -1,7 +1,7 @@
 {
   "name": "dlpwait",
   "version": "0.0.0",
-  "description": "A wait times app for Disneyland Paris",
+  "description": "A wait times / entertainment schedule app for Disneyland Paris",
   "scripts": {
     "prestart": "rimraf ./build",
     "start": "webpack-dev-server --open --config webpack.config.js --content-base ./public/dist",

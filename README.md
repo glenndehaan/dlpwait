@@ -1,6 +1,6 @@
 # Disneyland Paris Wait-Times App
 
-A wait times app for Disneyland Paris
+A wait times / entertainment schedule app for Disneyland Paris
 
 ## Structure
 - ES6 Javascript

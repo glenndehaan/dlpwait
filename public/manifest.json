@@ -1,7 +1,7 @@
 {
   "name": "DLP Wait Times",
   "short_name": "DLP Wait",
-  "description": "A wait times app for Disneyland Paris",
+  "description": "A wait times / entertainment schedule app for Disneyland Paris",
   "icons": [
     {
       "src": "./images/icon/logo_128x128.png",
@@ -43,32 +43,22 @@
   "screenshots" : [
     {
       "src": "./screenshots/screenshot1.png",
-      "sizes": "1079x1919",
+      "sizes": "1442x3202",
       "type": "image/png"
     },
     {
       "src": "./screenshots/screenshot2.png",
-      "sizes": "1079x1919",
+      "sizes": "1442x3202",
       "type": "image/png"
     },
     {
       "src": "./screenshots/screenshot3.png",
-      "sizes": "1079x1919",
+      "sizes": "1442x3202",
       "type": "image/png"
     },
     {
       "src": "./screenshots/screenshot4.png",
-      "sizes": "1079x1919",
-      "type": "image/png"
-    },
-    {
-      "src": "./screenshots/screenshot5.png",
-      "sizes": "1079x1919",
-      "type": "image/png"
-    },
-    {
-      "src": "./screenshots/screenshot6.png",
-      "sizes": "1079x1919",
+      "sizes": "1442x3202",
       "type": "image/png"
     }
   ],
@@ -76,8 +66,8 @@
   "scope": "/",
   "display": "standalone",
   "categories": ["entertainment", "utilities"],
-  "background_color": "#06090f",
-  "theme_color": "#06090f",
+  "background_color": "#111827",
+  "theme_color": "#111827",
   "related_applications": [],
   "iarc_rating_id": ""
 }
