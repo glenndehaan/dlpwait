@@ -31,7 +31,7 @@ storage.update();
 /**
  * Log intro
  */
-console.log(`DLP Wait\n\nCode Version: ${window.appVer}\nStorage Version: ${storage.get('version') || 0}\nNotification Permission: ${Notification.permission}\nCreated by: Glenn de Haan (https://github.com/glenndehaan)`);
+console.log(`DLP Wait\n\nCode Version: ${window.appVer}\nStorage Version: ${storage.get('version') || 0}\nNotification Permission: ${'Notification' in window ? Notification.permission : 'not available'}\nCreated by: Glenn de Haan (https://github.com/glenndehaan)`);
 
 /**
  * Validate service worker
