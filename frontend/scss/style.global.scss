@@ -57,10 +57,14 @@ article[type="entertainment"] {
   white-space: nowrap;
 }
 
-.grid-title-bar {
+.grid-title-bar-no-notify {
   display: grid;
-  grid-template-columns: 1fr 45px 45px 45px;
+  grid-template-columns: 1fr 45px 45px;
   gap: 5px;
+}
+
+.grid-title-bar {
+  grid-template-columns: 1fr 45px 45px 45px;
 }
 
 .construction-color {

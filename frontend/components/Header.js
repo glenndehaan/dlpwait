@@ -22,17 +22,19 @@ export default class Header extends Component {
      * Function runs then component mounts
      */
     async componentWillMount() {
-        const registration = await navigator.serviceWorker.ready;
-        const subscription = await registration.pushManager.getSubscription();
+        if('Notification' in window && 'PushManager' in window) {
+            const registration = await navigator.serviceWorker.ready;
+            const subscription = await registration.pushManager.getSubscription();
 
-        if (!subscription) {
-            this.setState({
-                notifications: false
-            });
-        } else {
-            this.setState({
-                notifications: true
-            });
+            if (!subscription) {
+                this.setState({
+                    notifications: false
+                });
+            } else {
+                this.setState({
+                    notifications: true
+                });
+            }
         }
     }
 
@@ -162,7 +164,7 @@ export default class Header extends Component {
 
         return (
             <div className={clsx("grid grid-cols-2 gap-1 p-2 px-4 bg-white dark:bg-gray-800", !parkOpen && !parkEMT && "grid-rows-2" , (parkOpen || parkEMT) && "grid-rows-3")}>
-                <div className="col-span-2 grid-title-bar">
+                <div className={clsx("col-span-2 grid-title-bar-no-notify", 'Notification' in window && 'PushManager' in window && "grid-title-bar")}>
                     <div className="text-3xl font-bold flex items-center">
                         <a href="/">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current inline-block h-8 w-8 align-middle mr-2">
@@ -187,7 +189,7 @@ export default class Header extends Component {
                             }
                         </button>
                     </div>
-                    {'Notification' in window &&
+                    {'Notification' in window && 'PushManager' in window &&
                         <div className="flex justify-center items-center mx-auto">
                             <button aria-label="Notifications" onClick={() => this.toggleNotifications()} className={clsx(notifications && 'text-blue-600 dark:text-blue-400')}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current h-10 w-10">
