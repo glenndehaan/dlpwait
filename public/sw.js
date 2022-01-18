@@ -6,6 +6,9 @@ const sameOrigin = true;
 const exceptions = ['/kill-switch.txt'];
 const networkFirst = ['/', '/api'];
 
+/**
+ * Handle install
+ */
 self.addEventListener('install', event => {
     event.waitUntil(
         caches
@@ -15,6 +18,9 @@ self.addEventListener('install', event => {
     );
 });
 
+/**
+ * Handle new cache activation
+ */
 self.addEventListener('activate', event => {
     const currentCaches = [PRECACHE, RUNTIME];
     event.waitUntil(
@@ -37,6 +43,9 @@ self.addEventListener('activate', event => {
     );
 });
 
+/**
+ * Handle fetches
+ */
 self.addEventListener('fetch', event => {
     const {url} = event.request;
 
@@ -87,4 +96,19 @@ self.addEventListener('fetch', event => {
             })
         );
     }
+});
+
+/**
+ * Handle incoming push events
+ */
+self.addEventListener('push', event => {
+    const data = event.data.json();
+    console.log('New notification', data);
+
+    event.waitUntil(
+        self.registration.showNotification(`DLP Wait | ${data.title}`, {
+            body: data.body,
+            icon: 'https://dlpwait.com/images/icon/logo_maskable_512x512.png'
+        })
+    );
 });

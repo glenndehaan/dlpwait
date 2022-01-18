@@ -1,9 +1,41 @@
 import {h, Component} from 'preact';
 import clsx from 'clsx';
 
+import arrays from '../utils/arrays';
 import date from '../utils/date';
 
 export default class Header extends Component {
+    /**
+     * Constructor
+     */
+    constructor() {
+        super();
+
+        this.state = {
+            notifications: false
+        };
+
+        this.publicVapidKey = 'BPvaT_Yfw2yZHH_jO_QlOl8OsrLM5U_KwJtjRioXk90zalcrWTAYXYjUMipt9D4S7oqoYcLnh8YyqPE9FDza3Jw';
+    }
+
+    /**
+     * Function runs then component mounts
+     */
+    async componentWillMount() {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.getSubscription();
+
+        if (!subscription) {
+            this.setState({
+                notifications: false
+            });
+        } else {
+            this.setState({
+                notifications: true
+            });
+        }
+    }
+
     /**
      * Update the sort
      *
@@ -23,12 +55,100 @@ export default class Header extends Component {
     }
 
     /**
+     * Toggles the notifications on or off
+     */
+    async toggleNotifications() {
+        // First check if the user has allowed notifications?
+        if(window.Notification.permission !== "granted") {
+            const permission = await window.Notification.requestPermission();
+
+            if(permission !== "granted") {
+                console.error('User did not give permission to receive notifications!');
+            } else {
+                console.log('User gave permissions to receive notifications!');
+
+                // Check if we have an active subscription
+                const registration = await navigator.serviceWorker.ready;
+                const subscription = await registration.pushManager.getSubscription();
+                if (subscription) {
+                    this.unsubscribe();
+                } else {
+                    this.subscribe();
+                }
+            }
+        } else {
+            // Check if we have an active subscription
+            const registration = await navigator.serviceWorker.ready;
+            const subscription = await registration.pushManager.getSubscription();
+            if (subscription) {
+                this.unsubscribe();
+            } else {
+                this.subscribe();
+            }
+        }
+    }
+
+    /**
+     * Subscribe to notifications
+     */
+    async subscribe() {
+        if (!('serviceWorker' in navigator)) return;
+
+        const registration = await navigator.serviceWorker.ready;
+
+        // Subscribe to push notifications
+        const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: arrays.urlBase64ToUint8Array(this.publicVapidKey)
+        });
+
+        const response = await fetch(window.site.production ? 'https://notification.dlpwait.com' : `http://${window.location.hostname}:4002`, {
+            method: 'POST',
+            body: JSON.stringify(subscription),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            this.setState({
+                notifications: true
+            });
+        }
+    }
+
+    /**
+     * Unsubscribe from notifications
+     */
+    async unsubscribe() {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.getSubscription();
+        if (!subscription) return;
+
+        const { endpoint } = subscription;
+        const response = await fetch(window.site.production ? `https://notification.dlpwait.com?endpoint=${endpoint}` : `http://${window.location.hostname}:4002?endpoint=${endpoint}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            await subscription.unsubscribe();
+            this.setState({
+                notifications: false
+            });
+        }
+    }
+
+    /**
      * Preact render function
      *
      * @returns {*}
      */
     render() {
         const {parks, url, sort, search, entertainmentView, updated, updateData, switchViews} = this.props;
+        const {notifications} = this.state;
 
         const parkFilter = parks.find((item) => {
             return item.slug === url.replace('/', '');
@@ -67,13 +187,15 @@ export default class Header extends Component {
                             }
                         </button>
                     </div>
-                    <div className="flex justify-center items-center mx-auto">
-                        <button aria-label="Notifications" onClick={() => alert('Feature not implemented yet!')}>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current h-10 w-10">
-                                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
-                            </svg>
-                        </button>
-                    </div>
+                    {'Notification' in window &&
+                        <div className="flex justify-center items-center mx-auto">
+                            <button aria-label="Notifications" onClick={() => this.toggleNotifications()} className={clsx(notifications && 'text-blue-600 dark:text-blue-400')}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current h-10 w-10">
+                                    <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    }
                     <div className="flex justify-center items-center mx-auto">
                         <button aria-label="Reload Data" onClick={() => updateData()}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current h-10 w-10">
