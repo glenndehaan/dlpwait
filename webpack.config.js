@@ -110,7 +110,7 @@ const config = {
                 {from: 'public/manifest.json'},
                 {from: 'public/sitemap.xml'},
                 {from: 'public/robots.txt'},
-                // {from: 'public/.well-known', to: '.well-known/[name][ext]'},
+                {from: 'public/.well-known', to: '.well-known/[name][ext]'},
                 {from: 'public/images/*.*', to: 'images/[name][ext]'},
                 {from: 'public/screenshots/*.*', to: 'screenshots/[name][ext]'},
                 {from: 'public/images/icon/*.*', to: 'images/icon/[name][ext]'}
