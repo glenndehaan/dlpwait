@@ -1,6 +1,6 @@
 [{
         "relation": ["delegate_permission/common.handle_all_urls"],
         "target" : { "namespace": "android_app", "package_name": "com.dlpwait.twa",
-                     "sha256_cert_fingerprints": ["52:EC:2D:44:7D:23:14:92:53:1E:9F:04:5C:DD:00:86:29:7E:52:D9:44:B5:56:CD:16:E6:81:C6:6E:D9:6B:F9"] }
+                     "sha256_cert_fingerprints": ["52:EC:2D:44:7D:23:14:92:53:1E:9F:04:5C:DD:00:86:29:7E:52:D9:44:B5:56:CD:16:E6:81:C6:6E:D9:6B:F9", "E3:E2:88:C8:6C:92:22:77:DA:09:29:59:54:F0:F8:88:71:E3:EF:09:02:FE:4A:0A:74:9A:89:AD:97:30:6A:67"] }
       }
 ]
