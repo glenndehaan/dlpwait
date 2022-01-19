@@ -14,6 +14,7 @@ import Dialog from './components/Dialog';
 
 import Redirect from './pages/Redirect';
 import Park from './pages/Park';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 import storage from './modules/storage';
 
@@ -197,6 +198,7 @@ class App extends Component {
                 <main ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
                         <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort} search={search} entertainmentView={entertainmentView} error={error}/>
+                        <PrivacyPolicy path="/privacy-policy"/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>
                 </main>
