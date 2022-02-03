@@ -2,6 +2,9 @@
 
 A wait times / entertainment schedule app for Disneyland Paris
 
+![screenshot1](https://user-images.githubusercontent.com/7496187/152312239-29494559-9750-4472-bb9b-d879119ed50b.png)
+![screenshot2](https://user-images.githubusercontent.com/7496187/152312242-1c11d335-8b1a-4a36-9b6a-c6ec67f6fe70.png)
+
 ## Structure
 - ES6 Javascript
 - Preact
@@ -9,11 +12,13 @@ A wait times / entertainment schedule app for Disneyland Paris
 - Mitt
 - Webpack
 
+## Features
+- Live wait times for both Disneyland Park and Walt Disney Studios parks
+- Entertainment schedule for both Disneyland Park and Walt Disney Studios parks
+- Push notifications when an attractions breaks-down
+
 ## Live Site
 https://dlpwait.com
-
-## App
-<a href=''><img alt='Get it on Google Play' width='200' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
 ## Development Usage
 - Install NodeJS 14.0 or higher.
