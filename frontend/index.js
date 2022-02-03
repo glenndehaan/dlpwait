@@ -7,6 +7,7 @@ if (process.env.NODE_ENV === 'development') {
 
 import {h, render, Component} from 'preact';
 import Router from 'preact-router';
+import splitbee from '@splitbee/web';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -48,6 +49,8 @@ class App extends Component {
      */
     constructor() {
         super();
+
+        splitbee.init();
 
         if ('serviceWorker' in navigator) {
             if(navigator.serviceWorker.controller !== null) {
@@ -141,6 +144,10 @@ class App extends Component {
         this.setState({
             sort
         });
+
+        splitbee.track("Sort", {
+            type: sort
+        });
     }
 
     /**
@@ -164,6 +171,10 @@ class App extends Component {
 
         this.setState({
             entertainmentView: !this.state.entertainmentView
+        });
+
+        splitbee.track("Switch Views", {
+            view: !this.state.entertainmentView ? 'Entertainment' : 'Attractions'
         });
     }
 
