@@ -21,5 +21,22 @@ export default {
             outputArray[i] = rawData.charCodeAt(i);
         }
         return outputArray;
+    },
+
+    /**
+     * Converts ASCII strings to hexadecimal
+     *
+     * @param string
+     * @param maxLength
+     * @returns {string}
+     */
+    asciiToHex: (string, maxLength = 10) => {
+        const arr1 = [];
+        for (let n = 0, l = string.length; n < l; n ++) {
+            const hex = Number(string.charCodeAt(n)).toString(16);
+            arr1.push(hex);
+        }
+
+        return `0x${arr1.join('').substring(0, maxLength)}`;
     }
 }

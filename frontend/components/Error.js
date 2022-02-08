@@ -1,5 +1,7 @@
 import {h, Component} from 'preact';
 
+import arrays from '../utils/arrays';
+
 export default class Error extends Component {
     /**
      * Preact render function
@@ -7,7 +9,7 @@ export default class Error extends Component {
      * @returns {*}
      */
     render() {
-        const {message} = this.props;
+        const {message, code = '', api = true} = this.props;
 
         return (
             <div className="flex-1 px-12 py-24 flex flex-col justify-center items-center text-primary">
@@ -18,6 +20,12 @@ export default class Error extends Component {
                 </span>
                 <h2 className="pt-6 text-2xl font-bold tracking-wide text-center">Oh no!?</h2>
                 <p className="text-accent-6 px-10 text-center pt-2">{message}</p>
+                <p className="text-accent-6 px-10 text-center text-sm py-2 shadow border rounded text-gray-700 mt-4 leading-tight dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    {code} ({arrays.asciiToHex(code)})<br/>
+                    <br/>
+                    Online: {window.navigator.onLine ? 'Yes' : 'No'}<br/>
+                    API: {api ? 'Connected' : 'Unable to connect'}
+                </p>
             </div>
         );
     }

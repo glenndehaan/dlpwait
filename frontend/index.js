@@ -168,10 +168,18 @@ class App extends Component {
      */
     switchViews() {
         storage.set('entertainment_view', !this.state.entertainmentView);
+        storage.set('search', '');
+        storage.set('sort', 'NAME_DESC');
 
         this.setState({
+            search: '',
+            sort: 'NAME_DESC',
             entertainmentView: !this.state.entertainmentView
         });
+
+        if(this.mainDiv !== null) {
+            this.mainDiv.scrollTop = 0;
+        }
 
         splitbee.track("Switch Views", {
             view: !this.state.entertainmentView ? 'Entertainment' : 'Attractions'

@@ -61,7 +61,7 @@ export default class Attractions extends Component {
         });
 
         if(parkAttractions.length < 1) {
-            return <Error message="It seems there are no attractions available at the moment"/>;
+            return <Error message="We couldn&apos;t find any attractions with your chosen filters" code="NO_ATTRACTIONS_AFTER_FILTER_SORT"/>;
         }
 
         return (

@@ -4,6 +4,10 @@
 export default {
     query: `
         {
+            generic {
+                waitTimesUpdated
+            }
+
             parks {
                 name
                 slug
@@ -54,7 +58,6 @@ export default {
                 active
                 name
                 schedules {
-                    status
                     startTime
                     endTime
                     date
@@ -65,6 +68,7 @@ export default {
                     slug
                 }
                 region
+                category
                 services {
                     photoPass
                     singleRider

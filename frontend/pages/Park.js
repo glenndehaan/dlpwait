@@ -39,7 +39,7 @@ export default class Park extends Component {
         const {error, attractions, entertainment, park, parks, sort, search, entertainmentView} = this.props;
 
         if(error) {
-            return <Error message="It seems we are unable to connect to the server at the moment. Please try again later..."/>
+            return <Error message="It seems we are unable to connect to the server at the moment. Please try again later..." code="NO_NETWORK_API_OFFLINE" api={!error}/>
         }
 
         const parkCheck = parks.find((item) => {
@@ -47,7 +47,7 @@ export default class Park extends Component {
         });
 
         if(typeof parkCheck === "undefined") {
-            return <Error message="It seems we can&apos;t recognize this park? Please check the URL!"/>
+            return <Error message="It seems we can&apos;t recognize this park? Please check the URL!" code="PARK_SLUG_UNDEFINED_MALFORMED_DATA"/>
         }
 
         if(entertainmentView) {

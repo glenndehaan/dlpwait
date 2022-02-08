@@ -42,7 +42,7 @@ export default class Entertainment extends Component {
         });
 
         if(parkEntertainment.length < 1) {
-            return <Error message="It seems there is no entertainment available at the moment"/>;
+            return <Error message="We couldn&apos;t find any entertainment with your chosen filters" code="NO_ENTERTAINMENT_AFTER_FILTER_SORT"/>;
         }
 
         return (
@@ -51,7 +51,7 @@ export default class Entertainment extends Component {
                     <div key={key}>
                         <article type="entertainment" className="grid gap-4 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
                             <div className="p-4">
-                                <h2 className="font-bold">{item.name}</h2>
+                                <h2 className="font-bold">{item.name}<br/><span className="text-xs">({item.category})</span></h2>
                                 <div className="mt-1">
                                     <span className="text-sm">{item.region}</span>
                                     <div className="grid gap-2 grid-row-auto mt-4 w-32 grid-services">
