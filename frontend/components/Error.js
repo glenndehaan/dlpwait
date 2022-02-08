@@ -1,6 +1,7 @@
 import {h, Component} from 'preact';
 
 import arrays from '../utils/arrays';
+import storage from "../modules/storage";
 
 export default class Error extends Component {
     /**
@@ -47,8 +48,13 @@ export default class Error extends Component {
                     <p className="text-accent-6 px-10 text-center text-sm py-2 shadow border rounded text-gray-700 mt-4 leading-tight dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                         {code} ({arrays.asciiToHex(code)})<br/>
                         <br/>
-                        Online: {window.navigator.onLine ? 'Yes' : 'No'}<br/>
-                        API: {api ? 'Connected' : 'Unable to connect'}
+                        Browser Online: {window.navigator.onLine ? 'Yes' : 'No'}<br/>
+                        API Online: {api ? 'Yes' : 'No'}<br/>
+                        Code Version: {window.appVer}<br/>
+                        Storage Version: {storage.get('version') || 0}<br/>
+                        Notification Permission: {'Notification' in window ? Notification.permission : 'not available'}<br/>
+                        <br/>
+                        Created by: Glenn de Haan (https://github.com/glenndehaan)
                     </p>
                 }
             </div>
