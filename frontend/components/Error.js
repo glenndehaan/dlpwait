@@ -1,7 +1,7 @@
 import {h, Component} from 'preact';
 
 import arrays from '../utils/arrays';
-import storage from "../modules/storage";
+import storage from '../modules/storage';
 
 export default class Error extends Component {
     /**
@@ -44,17 +44,20 @@ export default class Error extends Component {
                 </button>
                 <h2 className="pt-6 text-2xl font-bold tracking-wide text-center">Oh no!?</h2>
                 <p className="text-accent-6 px-10 text-center pt-2">{message}</p>
+                {!showDetails &&
+                    <p className="text-accent-6 text-sm italic px-10 text-center pt-2">Click the &quot;heart&quot; for technical details</p>
+                }
                 {showDetails &&
-                    <p className="text-accent-6 px-10 text-center text-sm py-2 shadow border rounded text-gray-700 mt-4 leading-tight dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        {code} ({arrays.asciiToHex(code)})<br/>
-                        <br/>
-                        Browser Online: {window.navigator.onLine ? 'Yes' : 'No'}<br/>
-                        API Online: {api ? 'Yes' : 'No'}<br/>
-                        Code Version: {window.appVer}<br/>
-                        Storage Version: {storage.get('version') || 0}<br/>
-                        Notification Permission: {'Notification' in window ? Notification.permission : 'not available'}<br/>
-                        <br/>
-                        Created by: Glenn de Haan (https://github.com/glenndehaan)
+                    <p className="text-accent-6 px-8 text-center text-sm py-2 shadow border rounded text-gray-700 mt-4 leading-tight dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <div>{code} ({arrays.asciiToHex(code)})</div>
+                        <div className="grid grid-cols-2 gap-2 p-2 bg-white dark:bg-gray-800 rounded my-2">
+                            <span className="text-right">Browser Online:</span><span>{window.navigator.onLine ? 'Yes' : 'No'}</span>
+                            <span className="text-right">API Online:</span><span>{api ? 'Yes' : 'No'}</span>
+                            <span className="text-right">Code Version:</span><span>{window.appVer}</span>
+                            <span className="text-right">Storage Version:</span><span>{storage.get('version') || 0}</span>
+                            <span className="text-right">Notification Permission:</span><span>{'Notification' in window ? Notification.permission : 'not available'}</span>
+                        </div>
+                        <div>Created by: Glenn de Haan (https://github.com/glenndehaan)</div>
                     </p>
                 }
             </div>

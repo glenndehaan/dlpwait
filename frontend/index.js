@@ -65,6 +65,9 @@ class App extends Component {
         this.state = {
             url: '/',
             parks: [],
+            generic: {
+                waitTimesUpdated: new Date('0')
+            },
             attractions: [],
             entertainment: [],
             updated: null,
@@ -104,6 +107,9 @@ class App extends Component {
             this.setState({
                 fetch: true,
                 error: false,
+                generic: {
+                    waitTimesUpdated: new Date(data.data.generic.waitTimesUpdated)
+                },
                 parks: data.data.parks,
                 attractions: data.data.attractions,
                 entertainment: data.data.entertainment,
@@ -199,7 +205,7 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {fetch, error, url, parks, attractions, entertainment, sort, search, entertainmentView, updated, updateAvailableDialog} = this.state;
+        const {fetch, error, url, generic, parks, attractions, entertainment, sort, search, entertainmentView, updated, updateAvailableDialog} = this.state;
 
         // Prevent layout shifts
         if(!fetch) {
@@ -212,7 +218,7 @@ class App extends Component {
                     <Dialog title="Update Ready!" description="Sorry for the interruption but we have an important update available... Click the update button below to update now." button="Update" onClick={() => this.update()}/>
                 }
                 <header>
-                    <Header url={url} parks={parks} sort={sort} updated={updated} search={search} entertainmentView={entertainmentView} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
+                    <Header url={url} generic={generic} parks={parks} sort={sort} updated={updated} search={search} entertainmentView={entertainmentView} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
                 </header>
                 <main ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>

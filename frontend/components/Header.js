@@ -13,6 +13,7 @@ export default class Header extends Component {
         super();
 
         this.state = {
+            swapTimes: false,
             notifications: false
         };
 
@@ -147,13 +148,22 @@ export default class Header extends Component {
     }
 
     /**
+     * Swap the times display
+     */
+    swapTimes() {
+        this.setState({
+            swapTimes: !this.state.swapTimes
+        });
+    }
+
+    /**
      * Preact render function
      *
      * @returns {*}
      */
     render() {
-        const {parks, url, sort, search, entertainmentView, updated, updateData, switchViews} = this.props;
-        const {notifications} = this.state;
+        const {generic, parks, url, sort, search, entertainmentView, updated, updateData, switchViews} = this.props;
+        const {swapTimes, notifications} = this.state;
 
         const parkFilter = parks.find((item) => {
             return item.slug === url.replace('/', '');
@@ -244,7 +254,18 @@ export default class Header extends Component {
 
                 {updated !== null &&
                     <div className="col-span-2 text-center text-sm border-t pt-2">
-                        Last updated: {date.getDateFormatted(updated)}
+                        <button onClick={() => this.swapTimes()}>
+                            {!swapTimes &&
+                                <span>
+                                    Last update: {date.getDateFormatted(updated)}
+                                </span>
+                            }
+                            {swapTimes &&
+                                <span>
+                                    Park update: {date.getDateFormatted(generic.waitTimesUpdated)}
+                                </span>
+                            }
+                        </button>
                     </div>
                 }
             </div>
