@@ -13,7 +13,6 @@ export default class Header extends Component {
         super();
 
         this.state = {
-            swapTimes: false,
             notifications: false
         };
 
@@ -148,22 +147,13 @@ export default class Header extends Component {
     }
 
     /**
-     * Swap the times display
-     */
-    swapTimes() {
-        this.setState({
-            swapTimes: !this.state.swapTimes
-        });
-    }
-
-    /**
      * Preact render function
      *
      * @returns {*}
      */
     render() {
         const {generic, parks, url, sort, search, view, updated, updateData, switchViews} = this.props;
-        const {swapTimes, notifications} = this.state;
+        const {notifications} = this.state;
 
         const parkFilter = parks.find((item) => {
             return item.slug === url.replace('/', '');
@@ -258,19 +248,13 @@ export default class Header extends Component {
                 }
 
                 {updated !== null &&
-                    <div className="col-span-2 text-center text-sm border-t pt-2">
-                        <button onClick={() => this.swapTimes()}>
-                            {!swapTimes &&
-                                <span>
-                                    Last update: {date.getDateFormatted(updated)}
-                                </span>
-                            }
-                            {swapTimes &&
-                                <span>
-                                    Park update: {date.getDateFormatted(generic.waitTimesUpdated)}
-                                </span>
-                            }
-                        </button>
+                    <div className="col-span-2 text-center text-sm border-t pt-2 timer-container">
+                        <div className="timer timer-content-1">
+                            Local update: {date.getDateFormatted(updated)}
+                        </div>
+                        <div className="timer timer-content-2">
+                            Park update: {date.getDateFormatted(generic.waitTimesUpdated)}
+                        </div>
                     </div>
                 }
             </div>
