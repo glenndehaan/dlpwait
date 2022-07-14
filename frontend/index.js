@@ -70,14 +70,21 @@ class App extends Component {
             },
             attractions: [],
             entertainment: [],
+            restaurants: [],
             updated: null,
             search: storage.get('search') || '',
             sort: storage.get('sort') || 'NAME_DESC',
-            entertainmentView: storage.get('entertainment_view') || false,
+            view: storage.get('view') || 'attractions',
             fetch: false,
             error: false,
             updateAvailableDialog: false
         }
+
+        this.views = [
+            'attractions',
+            'entertainment',
+            'restaurants'
+        ]
 
         window.site = {};
         window.site.production = process.env.NODE_ENV === 'production';
@@ -113,6 +120,7 @@ class App extends Component {
                 parks: data.data.parks,
                 attractions: data.data.attractions,
                 entertainment: data.data.entertainment,
+                restaurants: data.data.restaurants,
                 updated: new Date()
             });
         } else {
@@ -170,17 +178,20 @@ class App extends Component {
     }
 
     /**
-     * Switches between the attractions and entertainment views
+     * Switches between all available views
      */
     switchViews() {
-        storage.set('entertainment_view', !this.state.entertainmentView);
+        const currentView = this.views.indexOf(this.state.view);
+        const newView = this.views[(currentView + 1) < this.views.length ? currentView + 1 : 0];
+
+        storage.set('view', newView);
         storage.set('search', '');
         storage.set('sort', 'NAME_DESC');
 
         this.setState({
             search: '',
             sort: 'NAME_DESC',
-            entertainmentView: !this.state.entertainmentView
+            view: newView
         });
 
         if(this.mainDiv !== null) {
@@ -188,7 +199,7 @@ class App extends Component {
         }
 
         splitbee.track("Switch Views", {
-            view: !this.state.entertainmentView ? 'Entertainment' : 'Attractions'
+            view: newView
         });
     }
 
@@ -205,7 +216,7 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {fetch, error, url, generic, parks, attractions, entertainment, sort, search, entertainmentView, updated, updateAvailableDialog} = this.state;
+        const {fetch, error, url, generic, parks, attractions, entertainment, restaurants, sort, search, view, updated, updateAvailableDialog} = this.state;
 
         // Prevent layout shifts
         if(!fetch) {
@@ -218,11 +229,11 @@ class App extends Component {
                     <Dialog title="Update Ready!" description="Sorry for the interruption but we have an important update available... Click the update button below to update now." button="Update" onClick={() => this.update()}/>
                 }
                 <header>
-                    <Header url={url} generic={generic} parks={parks} sort={sort} updated={updated} search={search} entertainmentView={entertainmentView} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
+                    <Header url={url} generic={generic} parks={parks} sort={sort} updated={updated} search={search} view={view} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
                 </header>
                 <main ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} sort={sort} search={search} entertainmentView={entertainmentView} error={error}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} sort={sort} search={search} view={view} error={error}/>
                         <PrivacyPolicy path="/privacy-policy"/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>

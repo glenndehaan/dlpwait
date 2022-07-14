@@ -75,6 +75,34 @@ export default {
                     premierAccess
                 }
             }
+
+            restaurants {
+                active
+                status
+                name
+                park {
+                    name
+                    slug
+                }
+                region
+                category
+                cuisines
+                serviceTypes
+                openingTime
+                closingTime
+                menu {
+                    available
+                    url
+                }
+                mobileReservation {
+                    available
+                    url
+                }
+                mobileOrder {
+                    available
+                    url
+                }
+            }
         }
     `
 };

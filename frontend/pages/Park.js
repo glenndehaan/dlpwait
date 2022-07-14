@@ -3,6 +3,7 @@ import {h, Component} from 'preact';
 import Error from '../components/Error';
 import Attractions from '../components/Attractions';
 import Entertainment from '../components/Entertainment';
+import Restaurants from '../components/Restaurants';
 
 export default class Park extends Component {
     /**
@@ -36,7 +37,7 @@ export default class Park extends Component {
      * @returns {*}
      */
     render() {
-        const {error, attractions, entertainment, park, parks, sort, search, entertainmentView} = this.props;
+        const {error, attractions, entertainment, restaurants, park, parks, sort, search, view} = this.props;
 
         if(error) {
             return <Error message="It seems we are unable to connect to the server at the moment. Please try again later..." code="NO_NETWORK_API_OFFLINE" api={!error}/>
@@ -50,10 +51,19 @@ export default class Park extends Component {
             return <Error message="It seems we can&apos;t recognize this park? Please check the URL!" code="PARK_SLUG_UNDEFINED_MALFORMED_DATA"/>
         }
 
-        if(entertainmentView) {
+        // return <Restaurants park={park} restaurants={restaurants} sort={sort} search={search}/>
+
+        // eslint-disable-next-line no-unreachable
+        if(view === 'attractions') {
+            return <Attractions park={park} attractions={attractions} sort={sort} search={search}/>;
+        }
+
+        if(view === 'entertainment') {
             return <Entertainment park={park} entertainment={entertainment} sort={sort} search={search}/>;
-        } else {
-            return <Attractions park={park} attractions={attractions} sort={sort} search={search}/>
+        }
+
+        if(view === 'restaurants') {
+            return <Restaurants park={park} restaurants={restaurants} sort={sort} search={search}/>;
         }
     }
 }
