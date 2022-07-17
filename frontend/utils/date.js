@@ -34,5 +34,17 @@ export default {
         const askedDateTime = new Date(date).getTime();
 
         return currentDateTime > askedDateTime;
+    },
+
+    /**
+     * Check if we below the giving date/time
+     *
+     * @param date
+     */
+    checkUpcomingDateTime: (date) => {
+        const currentDateTime = new Date().getTime();
+        const askedDateTime = new Date(date).getTime();
+
+        return currentDateTime < askedDateTime;
     }
 }

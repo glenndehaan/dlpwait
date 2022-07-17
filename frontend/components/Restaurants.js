@@ -72,13 +72,13 @@ export default class Restaurants extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center text-white", item.status === "OPERATING" && date.checkPassedDateTime(item.openingTime) && "bg-green-700", item.status === "REFURBISHMENT" && "construction-color", (item.status === "CLOSED" || item.status === "CLOSED_OPS") && "bg-red-800", item.status === "OPERATING" && !date.checkPassedDateTime(item.openingTime) && "bg-yellow-700")}>
-                                {item.status === "OPERATING" && date.checkPassedDateTime(item.openingTime) && item.menu.available &&
+                            <div className={clsx("text-center p-0 rounded-r-lg flex flex-col justify-center text-white", item.status === "OPERATING" && date.checkPassedDateTime(item.openingTime) && date.checkUpcomingDateTime(item.closingTime) && "bg-green-700", item.status === "REFURBISHMENT" && "construction-color", (item.status === "CLOSED" || item.status === "CLOSED_OPS" || !date.checkUpcomingDateTime(item.closingTime)) && "bg-red-800", item.status === "OPERATING" && !date.checkPassedDateTime(item.openingTime) && "bg-yellow-700")}>
+                                {item.status === "OPERATING" && date.checkPassedDateTime(item.openingTime) && date.checkUpcomingDateTime(item.closingTime) && item.menu.available &&
                                     <div className="grid grid-rows-2 h-full">
                                         <div className="border-b flex flex-col items-center justify-center">
                                             <span className="font-bold">Open</span>
                                         </div>
-                                        <div className="flex flex-col items-center justify-center bg-blue-600 rounded-r-lg">
+                                        <div className="flex flex-col items-center justify-center bg-blue-600 rounded-br-lg">
                                             <a href={item.menu.url} target="_blank" rel="noreferrer noopener" className="flex items-center w-full h-full px-1 text-white text-sm rounded-br-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200">
                                                 <span className="underline" style="text-underline-offset: 3px; text-decoration-color: rgba(255, 255, 255, 0.5);">
                                                     Show Restaurant Menu
@@ -87,12 +87,12 @@ export default class Restaurants extends Component {
                                         </div>
                                     </div>
                                 }
-                                {item.status === "OPERATING" && !date.checkPassedDateTime(item.openingTime) && item.menu.available &&
+                                {item.status === "OPERATING" && !date.checkPassedDateTime(item.openingTime) && date.checkUpcomingDateTime(item.closingTime) && item.menu.available &&
                                     <div className="grid grid-rows-2 h-full">
                                         <div className="border-b flex flex-col items-center justify-center">
                                             <span className="font-bold">Opening<br/>Soon</span>
                                         </div>
-                                        <div className="flex flex-col items-center justify-center bg-blue-600 rounded-r-lg">
+                                        <div className="flex flex-col items-center justify-center bg-blue-600 rounded-br-lg">
                                             <a href={item.menu.url} target="_blank" rel="noreferrer noopener" className="flex items-center w-full h-full px-1 text-white text-sm rounded-br-lg hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200">
                                                 <span className="underline" style="text-underline-offset: 3px; text-decoration-color: rgba(255, 255, 255, 0.5);">
                                                     Show Restaurant Menu
@@ -101,10 +101,10 @@ export default class Restaurants extends Component {
                                         </div>
                                     </div>
                                 }
-                                {item.status === "OPERATING" && date.checkPassedDateTime(item.openingTime) && !item.menu.available && <div><span className="font-bold">Open</span></div>}
-                                {item.status === "OPERATING" && !date.checkPassedDateTime(item.openingTime) && !item.menu.available && <div><span className="font-bold">Opening<br/>Soon</span></div>}
+                                {item.status === "OPERATING" && date.checkPassedDateTime(item.openingTime) && date.checkUpcomingDateTime(item.closingTime) && !item.menu.available && <div><span className="font-bold">Open</span></div>}
+                                {item.status === "OPERATING" && !date.checkPassedDateTime(item.openingTime) && date.checkUpcomingDateTime(item.closingTime) && !item.menu.available && <div><span className="font-bold">Opening<br/>Soon</span></div>}
                                 {item.status === "REFURBISHMENT" && <div className="text-sm font-bold">Under Construction</div>}
-                                {(item.status === "CLOSED" || item.status === "CLOSED_OPS") && <div className="font-bold">Closed</div>}
+                                {(item.status === "CLOSED" || item.status === "CLOSED_OPS" || !date.checkUpcomingDateTime(item.closingTime)) && <div className="font-bold">Closed</div>}
                             </div>
                         </article>
                         {item.mobileOrder.available &&
