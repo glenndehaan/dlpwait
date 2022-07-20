@@ -34,6 +34,7 @@ export default {
                     photoPass
                     singleRider
                     premierAccess
+                    virtualQueue
                 }
                 waitTime {
                     standby {
@@ -73,6 +74,16 @@ export default {
                     photoPass
                     singleRider
                     premierAccess
+                    virtualQueue
+                }
+                virtualQueue {
+                    available
+                    queues {
+                        status
+                        openingTime
+                        closingTime
+                        nextTimeSlot
+                    }
                 }
             }
 

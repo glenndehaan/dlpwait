@@ -15,7 +15,7 @@ export default class Restaurants extends Component {
         const {restaurants, park, sort, search} = this.props;
 
         const parkRestaurants = restaurants.filter((restaurant) => {
-            return restaurant.park.slug === park && restaurant.status !== "UNDEFINED";
+            return restaurant.park.slug === park && restaurant.status !== "UNDEFINED" && restaurant.active;
         }).sort((a, b) => {
             if(sort === "NAME_DESC") {
                 return a.name.localeCompare(b.name);

@@ -15,7 +15,7 @@ export default class Entertainment extends Component {
         const {entertainment, park, sort, search} = this.props;
 
         const parkEntertainment = entertainment.filter((entertainment) => {
-            return entertainment.park.slug === park && entertainment.schedules.length > 0;
+            return entertainment.park.slug === park && (entertainment.schedules.length > 0 || entertainment.virtualQueue.available);
         }).filter((entertainment) => {
             let items = 0;
 
@@ -26,7 +26,7 @@ export default class Entertainment extends Component {
                 }
             }
 
-            return items > 0;
+            return items > 0 || entertainment.virtualQueue.available;
         }).sort((a, b) => {
             if(sort === "NAME_DESC") {
                 return a.name.localeCompare(b.name);
@@ -75,25 +75,46 @@ export default class Entertainment extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="p-4 rounded-r-lg flex flex-col justify-center text-white bg-blue-600 whitespace-nowrap">
-                                <div className="grid grid-rows-auto px-1 py-2 gap-2">
-                                    {item.schedules.map((event, key) => {
-                                        if(!date.checkPassedDateTime(`${event.date}T${event.startTime}`)) {
-                                            return (
-                                                <div key={key} className="flex flex-col justify-center">
-                                                    <span className="font-bold text-left">
-                                                        {event.language !== "" && <Flags lang={event.language}/>}
-                                                        <span className="inline-block align-middle">{date.getHoursMinutes(`${event.date}T${event.startTime}`)}</span>
-                                                    </span>
-                                                </div>
-                                            )
-                                        }
+                            {!item.services.virtualQueue &&
+                                <div className="p-4 rounded-r-lg flex flex-col justify-center text-white bg-blue-600 whitespace-nowrap">
+                                    <div className="grid grid-rows-auto px-1 py-2 gap-2">
+                                        {item.schedules.map((event, key) => {
+                                            if (!date.checkPassedDateTime(`${event.date}T${event.startTime}`)) {
+                                                return (
+                                                    <div key={key} className="flex flex-col justify-center">
+                                                        <span className="font-bold text-left">
+                                                            {event.language !== "" && <Flags lang={event.language}/>}
+                                                            <span className="inline-block align-middle">{date.getHoursMinutes(`${event.date}T${event.startTime}`)}</span>
+                                                        </span>
+                                                    </div>
+                                                )
+                                            }
 
-                                        return null;
-                                    })}
+                                            return null;
+                                        })}
+                                    </div>
+                                </div>
+                            }
+                        </article>
+                        {item.services.virtualQueue &&
+                            <div className="border border-t-0 text-center bg-gradient-to-t from-blue-800 to-blue-600 text-white rounded-b-lg mx-10 row-span-1 shadow-lg p-2 dark:border-gray-700">
+                                <div className="flex flex-col justify-center text-lg font-bold border-b w-3/4 m-auto mb-2">Virtual Queue</div>
+
+                                <div>
+                                    Timeslot / status:<br/>
+                                    {item.virtualQueue.queues.filter((item) => {
+                                        return item.status !== "FINISHED";
+                                    }).map((item, key) => (
+                                        <div key={key} className="text-sm">
+                                            {date.getHoursMinutes(item.openingTime)} - {date.getHoursMinutes(item.closingTime)}&nbsp;/&nbsp;
+                                            {item.status === 'OPEN' && <span>Available - Slot: {date.getHoursMinutes(item.nextTimeSlot)}</span>}
+                                            {item.status === 'CLOSED' && <span>Opening Soon</span>}
+                                            {item.status === 'FULL' && <span>Full</span>}
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        </article>
+                        }
                     </div>
                 ))}
             </div>
