@@ -8,6 +8,21 @@ export default {
                 waitTimesUpdated
             }
 
+            weather {
+                current {
+                    wmo {
+                        description
+                    }
+                    temperature
+                }
+                expected {
+                    wmo {
+                        description
+                    }
+                    temperature
+                }
+            }
+
             parks {
                 name
                 slug

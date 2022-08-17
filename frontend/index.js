@@ -68,6 +68,20 @@ class App extends Component {
             generic: {
                 waitTimesUpdated: new Date('0')
             },
+            weather: {
+                current: {
+                    wmo: {
+                        description: ""
+                    },
+                    temperature: 0
+                },
+                expected: {
+                    wmo: {
+                        description: ""
+                    },
+                    temperature: 0
+                }
+            },
             attractions: [],
             entertainment: [],
             restaurants: [],
@@ -117,6 +131,7 @@ class App extends Component {
                 generic: {
                     waitTimesUpdated: new Date(data.data.generic.waitTimesUpdated)
                 },
+                weather: data.data.weather,
                 parks: data.data.parks,
                 attractions: data.data.attractions,
                 entertainment: data.data.entertainment,
@@ -216,7 +231,7 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {fetch, error, url, generic, parks, attractions, entertainment, restaurants, sort, search, view, updated, updateAvailableDialog} = this.state;
+        const {fetch, error, url, generic, weather, parks, attractions, entertainment, restaurants, sort, search, view, updated, updateAvailableDialog} = this.state;
 
         // Prevent layout shifts
         if(!fetch) {
@@ -229,7 +244,7 @@ class App extends Component {
                     <Dialog title="Update Ready!" description="Sorry for the interruption but we have an important update available... Click the update button below to update now." button="Update" onClick={() => this.update()}/>
                 }
                 <header>
-                    <Header url={url} generic={generic} parks={parks} sort={sort} updated={updated} search={search} view={view} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
+                    <Header url={url} generic={generic} weather={weather} parks={parks} sort={sort} updated={updated} search={search} view={view} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
                 </header>
                 <main ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>

@@ -152,7 +152,7 @@ export default class Header extends Component {
      * @returns {*}
      */
     render() {
-        const {generic, parks, url, sort, search, view, updated, updateData, switchViews} = this.props;
+        const {generic, weather, parks, url, sort, search, view, updated, updateData, switchViews} = this.props;
         const {notifications} = this.state;
 
         const parkFilter = parks.find((item) => {
@@ -164,6 +164,8 @@ export default class Header extends Component {
         const parkEMT = parkFilter ? parkFilter.schedules.find((item) => {
             return item.status === "EXTRA_MAGIC_HOURS";
         }) : false;
+
+        console.log(weather);
 
         return (
             <div className={clsx("grid grid-cols-2 gap-1 p-2 px-4 bg-white dark:bg-gray-800", !parkOpen && !parkEMT && "grid-rows-2" , (parkOpen || parkEMT) && "grid-rows-3")}>
@@ -254,6 +256,12 @@ export default class Header extends Component {
                         </div>
                         <div className="timer timer-content-2">
                             Park update: {date.getDateFormatted(generic.waitTimesUpdated)}
+                        </div>
+                        <div className="timer timer-content-3">
+                            Current weather: {weather.current.wmo.description}, {weather.current.temperature}&#8451;
+                        </div>
+                        <div className="timer timer-content-4">
+                            Forecasted weather: {weather.expected.wmo.description}, {weather.expected.temperature}&#8451;
                         </div>
                     </div>
                 }

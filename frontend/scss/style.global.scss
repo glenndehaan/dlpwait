@@ -140,46 +140,85 @@ article[type="entertainment"] {
 
 .timer-content-1 {
   margin-right: -100%;
-  animation: timer-fade-1 12s ease infinite;
+  animation: timer-fade-1 20s ease infinite;
 }
 
 .timer-content-2 {
+  margin-right: -100%;
   opacity: 0;
-  animation: timer-fade-2 12s ease infinite;
+  animation: timer-fade-2 20s ease infinite;
+}
+
+.timer-content-3 {
+  margin-right: -100%;
+  opacity: 0;
+  animation: timer-fade-3 20s ease infinite;
+}
+
+.timer-content-4 {
+  opacity: 0;
+  animation: timer-fade-4 20s ease infinite;
 }
 
 @keyframes timer-fade-1 {
   0% {
     opacity: 1;
   }
-  45% {
+  15% {
     opacity: 1;
   }
-  50% {
-    opacity: 0;
-  }
-  90% {
+  20% {
     opacity: 0;
   }
   95% {
+    opacity: 0;
+  }
+  100% {
     opacity: 1;
   }
 }
 
 @keyframes timer-fade-2 {
-  0% {
+  20% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0;
+  }
+}
+
+@keyframes timer-fade-3 {
+  45% {
     opacity: 0;
   }
   50% {
-    opacity: 0;
-  }
-  55% {
     opacity: 1;
   }
-  85% {
+  65% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0;
+  }
+}
+
+@keyframes timer-fade-4 {
+  70% {
+    opacity: 0;
+  }
+  75% {
     opacity: 1;
   }
   90% {
+    opacity: 1;
+  }
+  95% {
     opacity: 0;
   }
 }
