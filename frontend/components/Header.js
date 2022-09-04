@@ -165,8 +165,6 @@ export default class Header extends Component {
             return item.status === "EXTRA_MAGIC_HOURS";
         }) : false;
 
-        console.log(weather);
-
         return (
             <div className={clsx("grid grid-cols-2 gap-1 p-2 px-4 bg-white dark:bg-gray-800", !parkOpen && !parkEMT && "grid-rows-2" , (parkOpen || parkEMT) && "grid-rows-3")}>
                 <div className={clsx("col-span-2 grid-title-bar-no-notify", 'Notification' in window && 'PushManager' in window && "grid-title-bar")}>
