@@ -224,11 +224,20 @@ export default class Header extends Component {
                     <select id="sort" className="shadow appearance-none border rounded w-full py-2 px-3 pr-7 text-gray-700 mt-1 bg-white leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white" onChange={(e) => this.updateSort(e)}>
                         <option selected={sort === "NAME_DESC"} value="NAME_DESC">A-Z</option>
                         <option selected={sort === "NAME_ASC"} value="NAME_ASC">Z-A</option>
-                        <option disabled={view !== 'attractions'} selected={sort === "WAIT_TIME_STANDBY_DESC"} value="WAIT_TIME_STANDBY_DESC">Shortest Standby Wait Time</option>
-                        <option disabled={view !== 'attractions'} selected={sort === "WAIT_TIME_STANDBY_ASC"} value="WAIT_TIME_STANDBY_ASC">Longest Standby Wait Time</option>
-                        <option disabled={view !== 'attractions'} selected={sort === "SINGLE_RIDER_AVAILABILITY"} value="SINGLE_RIDER_AVAILABILITY">Single Rider Availability</option>
-                        <option disabled={view !== 'attractions'} selected={sort === "PREMIER_ACCESS_AVAILABILITY"} value="PREMIER_ACCESS_AVAILABILITY">Premier Access Availability</option>
-                        <option disabled={view !== 'attractions'} selected={sort === "ATTRACTION_STATUS"} value="ATTRACTION_STATUS">Attraction Status</option>
+                        {view === 'attractions' && <option selected={sort === "WAIT_TIME_STANDBY_DESC"} value="WAIT_TIME_STANDBY_DESC">Shortest Standby Wait Time</option>}
+                        {view === 'attractions' && <option selected={sort === "WAIT_TIME_STANDBY_ASC"} value="WAIT_TIME_STANDBY_ASC">Longest Standby Wait Time</option>}
+                        {view === 'attractions' && <option selected={sort === "SINGLE_RIDER_AVAILABILITY"} value="SINGLE_RIDER_AVAILABILITY">Single Rider Availability</option>}
+                        {view === 'attractions' && <option selected={sort === "PREMIER_ACCESS_AVAILABILITY"} value="PREMIER_ACCESS_AVAILABILITY">Premier Access Availability</option>}
+                        {(view === 'attractions' || view === 'entertainment') && <option selected={sort === "PHOTO_PASS_AVAILABILITY"} value="PHOTO_PASS_AVAILABILITY">Photo Pass Availability</option>}
+                        {view === 'attractions' && <option selected={sort === "ATTRACTION_STATUS"} value="ATTRACTION_STATUS">Attraction Status</option>}
+                        {view === 'attractions' && <option selected={sort === "ATTRACTION_STATUS_UNDER_CONSTRUCTION"} value="ATTRACTION_STATUS_UNDER_CONSTRUCTION">Status: Under Construction</option>}
+                        {view === 'attractions' && <option selected={sort === "ATTRACTION_STATUS_TEMPORARY_CLOSED"} value="ATTRACTION_STATUS_TEMPORARY_CLOSED">Status: Temporary Closed (Breakdown)</option>}
+                        {view === 'attractions' && <option selected={sort === "ATTRACTION_STATUS_CLOSED"} value="ATTRACTION_STATUS_CLOSED">Status: Closed</option>}
+                        {view === 'entertainment' && <option selected={sort === "MEET_AND_GREET_CATEGORY"} value="MEET_AND_GREET_CATEGORY">Meet & Greets</option>}
+                        {view === 'entertainment' && <option selected={sort === "SHOWS_CATEGORY"} value="SHOWS_CATEGORY">Shows</option>}
+                        {view === 'restaurants' && <option selected={sort === "MOBILE_ORDER_AVAILABILITY"} value="MOBILE_ORDER_AVAILABILITY">Mobile Order Availability</option>}
+                        {view === 'restaurants' && <option selected={sort === "RESERVATION_REQUIRED"} value="RESERVATION_REQUIRED">Reservation Required</option>}
+                        {view === 'restaurants' && <option selected={sort === "COUNTER_SERVICE"} value="COUNTER_SERVICE">Counter Service</option>}
                     </select>
                     <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                         <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 fill-current" viewBox="0 0 20 20">

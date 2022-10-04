@@ -17,15 +17,27 @@ export default class Restaurants extends Component {
         const parkRestaurants = restaurants.filter((restaurant) => {
             return restaurant.park.slug === park && restaurant.status !== "UNDEFINED" && restaurant.active;
         }).sort((a, b) => {
-            if(sort === "NAME_DESC") {
-                return a.name.localeCompare(b.name);
+            // Sort/group by mobile order availability
+            if(sort === "MOBILE_ORDER_AVAILABILITY") {
+                if (a.mobileOrder.available > b.mobileOrder.available) return -1;
+                if (a.mobileOrder.available < b.mobileOrder.available) return 1;
             }
 
-            if(sort === "NAME_ASC") {
-                return b.name.localeCompare(a.name);
+            // Sort/group by reservation required
+            if(sort === "RESERVATION_REQUIRED") {
+                if (a.mobileReservation.available > b.mobileReservation.available) return -1;
+                if (a.mobileReservation.available < b.mobileReservation.available) return 1;
             }
 
-            return 0;
+            // Sort/group by counter service
+            if(sort === "COUNTER_SERVICE") {
+                if (a.mobileReservation.available > b.mobileReservation.available) return 1;
+                if (a.mobileReservation.available < b.mobileReservation.available) return -1;
+            }
+
+            // Sort/group attractions alphabetical on name
+            if (a.name > b.name) return sort === "NAME_DESC" ? 1 : sort === "NAME_ASC" ? -1 : 1;
+            if (a.name < b.name) return sort === "NAME_DESC" ? -1 : sort === "NAME_ASC" ? 1 : -1;
         }).filter((restaurant) => {
             return restaurant.name.toLowerCase().includes(search.toLowerCase());
         });

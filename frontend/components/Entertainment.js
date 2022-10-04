@@ -28,15 +28,27 @@ export default class Entertainment extends Component {
 
             return items > 0 || entertainment.virtualQueue.available;
         }).sort((a, b) => {
-            if(sort === "NAME_DESC") {
-                return a.name.localeCompare(b.name);
+            // Sort/group by photo pass availability
+            if(sort === "PHOTO_PASS_AVAILABILITY") {
+                if (a.services.photoPass > b.services.photoPass) return -1;
+                if (a.services.photoPass < b.services.photoPass) return 1;
             }
 
-            if(sort === "NAME_ASC") {
-                return b.name.localeCompare(a.name);
+            // Sort/group by meet & greet
+            if(sort === "MEET_AND_GREET_CATEGORY") {
+                if ((a.category === 'Character Experience - Meet & Greet') > (b.category === 'Character Experience - Meet & Greet')) return -1;
+                if ((a.category === 'Character Experience - Meet & Greet') < (b.category === 'Character Experience - Meet & Greet')) return 1;
             }
 
-            return 0;
+            // Sort/group by shows
+            if(sort === "SHOWS_CATEGORY") {
+                if ((a.category === 'Character Experience - Meet & Greet') > (b.category === 'Character Experience - Meet & Greet')) return 1;
+                if ((a.category === 'Character Experience - Meet & Greet') < (b.category === 'Character Experience - Meet & Greet')) return -1;
+            }
+
+            // Sort/group attractions alphabetical on name
+            if (a.name > b.name) return sort === "NAME_DESC" ? 1 : sort === "NAME_ASC" ? -1 : 1;
+            if (a.name < b.name) return sort === "NAME_DESC" ? -1 : sort === "NAME_ASC" ? 1 : -1;
         }).filter((entertainment) => {
             return entertainment.name.toLowerCase().includes(search.toLowerCase());
         });
