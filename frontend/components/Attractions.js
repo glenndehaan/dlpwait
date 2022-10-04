@@ -26,6 +26,24 @@ export default class Attractions extends Component {
                 UNDEFINED: 5
             };
 
+            // Sort/group by single rider availability
+            if(sort === "SINGLE_RIDER_AVAILABILITY") {
+                if (a.waitTime.singleRider.available > b.waitTime.singleRider.available) return -1;
+                if (a.waitTime.singleRider.available < b.waitTime.singleRider.available) return 1;
+            }
+
+            // Sort/group by premier access availability
+            if(sort === "PREMIER_ACCESS_AVAILABILITY") {
+                if (a.premierAccess.available > b.premierAccess.available) return -1;
+                if (a.premierAccess.available < b.premierAccess.available) return 1;
+            }
+
+            // Sort/group by photo pass availability
+            if(sort === "PHOTO_PASS_AVAILABILITY") {
+                if (a.services.photoPass > b.services.photoPass) return -1;
+                if (a.services.photoPass < b.services.photoPass) return 1;
+            }
+
             // Sort/group attractions on status first
             if(sort !== "ATTRACTION_STATUS_UNDER_CONSTRUCTION" && sort !== "ATTRACTION_STATUS_TEMPORARY_CLOSED" && sort !== "ATTRACTION_STATUS_CLOSED") {
                 if (statusMap[a.status] > statusMap[b.status]) return sort === "ATTRACTION_STATUS" ? -1 : 1;
@@ -79,24 +97,6 @@ export default class Attractions extends Component {
             if(sort === "WAIT_TIME_STANDBY_ASC") {
                 if (a.waitTime.standby.minutes > b.waitTime.standby.minutes) return -1;
                 if (a.waitTime.standby.minutes < b.waitTime.standby.minutes) return 1;
-            }
-
-            // Sort/group by single rider availability
-            if(sort === "SINGLE_RIDER_AVAILABILITY") {
-                if (a.waitTime.singleRider.available > b.waitTime.singleRider.available) return -1;
-                if (a.waitTime.singleRider.available < b.waitTime.singleRider.available) return 1;
-            }
-
-            // Sort/group by premier access availability
-            if(sort === "PREMIER_ACCESS_AVAILABILITY") {
-                if (a.premierAccess.available > b.premierAccess.available) return -1;
-                if (a.premierAccess.available < b.premierAccess.available) return 1;
-            }
-
-            // Sort/group by photo pass availability
-            if(sort === "PHOTO_PASS_AVAILABILITY") {
-                if (a.services.photoPass > b.services.photoPass) return -1;
-                if (a.services.photoPass < b.services.photoPass) return 1;
             }
 
             // Sort/group attractions alphabetical on name
