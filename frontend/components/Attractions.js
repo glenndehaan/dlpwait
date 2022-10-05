@@ -3,16 +3,37 @@ import clsx from 'clsx';
 
 import Error from './Error';
 
+import storage from '../modules/storage';
+
 import date from '../utils/date';
 
 export default class Attractions extends Component {
+    /**
+     * Add/remove an item from the favourites list
+     *
+     * @param name
+     */
+    updateFavourite(name) {
+        const favourites = this.props.favourites;
+
+        if(favourites.includes(name)) {
+            favourites.splice(favourites.indexOf(name), 1);
+            storage.set('favourites', favourites);
+        } else {
+            favourites.push(name);
+            storage.set('favourites', favourites);
+        }
+
+        this.props.reloadFavourites();
+    }
+
     /**
      * Preact render function
      *
      * @returns {*}
      */
     render() {
-        const {attractions, park, sort, search} = this.props;
+        const {attractions, park, sort, search, favourites} = this.props;
 
         const parkAttractions = attractions.filter((attraction) => {
             return attraction.park.slug === park && attraction.status !== "UNDEFINED";
@@ -25,6 +46,12 @@ export default class Attractions extends Component {
                 CLOSED: 3,
                 UNDEFINED: 5
             };
+
+            // Sort/group by favourites
+            if(sort === "FAVOURITES") {
+                if (favourites.includes(a.name) > favourites.includes(b.name)) return -1;
+                if (favourites.includes(a.name) < favourites.includes(b.name)) return 1;
+            }
 
             // Sort/group by single rider availability
             if(sort === "SINGLE_RIDER_AVAILABILITY") {
@@ -116,7 +143,17 @@ export default class Attractions extends Component {
                     <div key={key}>
                         <article type="attraction" className="grid gap-4 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
                             <div className="p-4">
-                                <h2 className="font-bold">{item.name}</h2>
+                                <h2>
+                                    <button aria-label="Add/remove attraction to/from favourites" className={clsx("align-middle h-5 w-5 mr-1", favourites.includes(item.name) ? "text-red-500" : "text-gray-400")} onClick={() => this.updateFavourite(item.name)}>
+                                        <svg className="h-5 w-5 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M16.5 5c-1.54 0-3.04.99-3.56 2.36h-1.87C10.54 5.99 9.04 5 7.5 5 5.5 5 4 6.5 4 8.5c0 2.89 3.14 5.74 7.9 10.05l.1.1.1-.1C16.86 14.24 20 11.39 20 8.5c0-2-1.5-3.5-3.5-3.5z" opacity=".3"/>
+                                            <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/>
+                                        </svg>
+                                    </button>
+                                    <span className="align-middle font-bold">
+                                        {item.name}
+                                    </span>
+                                </h2>
                                 <div className="mt-1">
                                     <span className="text-sm">{item.region}</span>
                                     <div className="grid gap-2 grid-row-auto mt-4 w-36 grid-services">

@@ -89,6 +89,7 @@ class App extends Component {
             search: storage.get('search') || '',
             sort: storage.get('sort') || 'NAME_DESC',
             view: storage.get('view') || 'attractions',
+            favourites: storage.get('favourites') || [],
             fetch: false,
             error: false,
             updateAvailableDialog: false
@@ -193,6 +194,18 @@ class App extends Component {
     }
 
     /**
+     * Reload the favourites into the state
+     */
+    reloadFavourites() {
+        storage.set('sort', this.state.view === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC');
+
+        this.setState({
+            favourites: storage.get('favourites') || [],
+            sort: this.state.view === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC'
+        });
+    }
+
+    /**
      * Switches between all available views
      */
     switchViews() {
@@ -201,11 +214,11 @@ class App extends Component {
 
         storage.set('view', newView);
         storage.set('search', '');
-        storage.set('sort', 'NAME_DESC');
+        storage.set('sort', newView === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC');
 
         this.setState({
             search: '',
-            sort: 'NAME_DESC',
+            sort: newView === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC',
             view: newView
         });
 
@@ -231,7 +244,7 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {fetch, error, url, generic, weather, parks, attractions, entertainment, restaurants, sort, search, view, updated, updateAvailableDialog} = this.state;
+        const {fetch, error, url, generic, weather, parks, attractions, entertainment, restaurants, sort, search, view, favourites, updated, updateAvailableDialog} = this.state;
 
         // Prevent layout shifts
         if(!fetch) {
@@ -244,11 +257,11 @@ class App extends Component {
                     <Dialog title="Update Ready!" description="Sorry for the interruption but we have an important update available... Click the update button below to update now." button="Update" onClick={() => this.update()}/>
                 }
                 <header>
-                    <Header url={url} generic={generic} weather={weather} parks={parks} sort={sort} updated={updated} search={search} view={view} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
+                    <Header url={url} generic={generic} weather={weather} parks={parks} sort={sort} updated={updated} search={search} view={view} favourites={favourites} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
                 </header>
                 <main ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} sort={sort} search={search} view={view} error={error}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} sort={sort} search={search} view={view} favourites={favourites} error={error} reloadFavourites={() => this.reloadFavourites()}/>
                         <PrivacyPolicy path="/privacy-policy"/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>

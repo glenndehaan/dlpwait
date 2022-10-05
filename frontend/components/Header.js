@@ -152,7 +152,7 @@ export default class Header extends Component {
      * @returns {*}
      */
     render() {
-        const {generic, weather, parks, url, sort, search, view, updated, updateData, switchViews} = this.props;
+        const {generic, weather, parks, url, sort, search, view, favourites, updated, updateData, switchViews} = this.props;
         const {notifications} = this.state;
 
         const parkFilter = parks.find((item) => {
@@ -222,6 +222,7 @@ export default class Header extends Component {
                 <div className="relative inline-block w-full">
                     <label htmlFor="sort" style={{ position: 'absolute', top: '-1000px', left: '-1000px' }}>Sort Activities</label>
                     <select id="sort" className="shadow appearance-none border rounded w-full py-2 px-3 pr-7 text-gray-700 mt-1 bg-white leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white" onChange={(e) => this.updateSort(e)}>
+                        {view === 'attractions' && favourites.length > 0 && <option selected={sort === "FAVOURITES"} value="FAVOURITES">Favourites</option>}
                         <option selected={sort === "NAME_DESC"} value="NAME_DESC">A-Z</option>
                         <option selected={sort === "NAME_ASC"} value="NAME_ASC">Z-A</option>
                         {view === 'attractions' && <option selected={sort === "WAIT_TIME_STANDBY_DESC"} value="WAIT_TIME_STANDBY_DESC">Shortest Standby Wait Time</option>}
