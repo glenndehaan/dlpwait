@@ -20,7 +20,8 @@ const config = {
     devServer: {
         host: '0.0.0.0',
         port: 3467,
-        historyApiFallback: true
+        historyApiFallback: true,
+        hot: false
     },
     entry: {
         main: [
@@ -64,7 +65,13 @@ const config = {
                 test:/\.css$/,
                 use:[
                     MiniCssExtractPlugin.loader,
-                    `css-loader?sourceMap=${!prod}`,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            url: false,
+                            sourceMap: !prod,
+                        }
+                    },
                     {
                         loader: 'postcss-loader',
                         options: {
@@ -77,7 +84,13 @@ const config = {
                 test: /global\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    `css-loader?url=false&sourceMap=${!prod}`,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            url: false,
+                            sourceMap: !prod,
+                        }
+                    },
                     `sass-loader`
                 ]
             },

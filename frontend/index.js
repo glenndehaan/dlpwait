@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === 'development') {
 import {h, render, Component} from 'preact';
 import Router from 'preact-router';
 import splitbee from '@splitbee/web';
+import clsx from 'clsx';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -62,6 +63,20 @@ class App extends Component {
             }
         }
 
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.querySelector('html').setAttribute('style', 'color-scheme: dark;');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            const newColorScheme = event.matches ? "dark" : "light";
+
+            if(newColorScheme === 'light') {
+                document.querySelector('html').removeAttribute('style');
+            } else {
+                document.querySelector('html').setAttribute('style', 'color-scheme: dark;');
+            }
+        });
+
         this.state = {
             url: '/',
             parks: [],
@@ -90,6 +105,7 @@ class App extends Component {
             sort: storage.get('sort') || 'NAME_DESC',
             view: storage.get('view') || 'attractions',
             favourites: storage.get('favourites') || [],
+            menu: false,
             fetch: false,
             error: false,
             updateAvailableDialog: false
@@ -207,8 +223,33 @@ class App extends Component {
 
     /**
      * Switches between all available views
+     *
+     * @param view
      */
-    switchViews() {
+    switchViews(view = undefined) {
+        if(typeof view !== "undefined") {
+            storage.set('view', view);
+            storage.set('search', '');
+            storage.set('sort', view === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC');
+
+            this.setState({
+                search: '',
+                sort: view === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC',
+                view: view,
+                menu: false
+            });
+
+            if(this.mainDiv !== null) {
+                this.mainDiv.scrollTop = 0;
+            }
+
+            splitbee.track("Switch Views", {
+                view: view
+            });
+
+            return;
+        }
+
         const currentView = this.views.indexOf(this.state.view);
         const newView = this.views[(currentView + 1) < this.views.length ? currentView + 1 : 0];
 
@@ -232,6 +273,15 @@ class App extends Component {
     }
 
     /**
+     * Toggle the menu state
+     */
+    toggleMenu() {
+        this.setState({
+            menu: !this.state.menu
+        });
+    }
+
+    /**
      * Updates the app
      */
     update() {
@@ -244,7 +294,7 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {fetch, error, url, generic, weather, parks, attractions, entertainment, restaurants, sort, search, view, favourites, updated, updateAvailableDialog} = this.state;
+        const {fetch, error, url, generic, weather, parks, attractions, entertainment, restaurants, sort, search, view, favourites, menu, updated, updateAvailableDialog} = this.state;
 
         // Prevent layout shifts
         if(!fetch) {
@@ -257,18 +307,20 @@ class App extends Component {
                     <Dialog title="Update Ready!" description="Sorry for the interruption but we have an important update available... Click the update button below to update now." button="Update" onClick={() => this.update()}/>
                 }
                 <header>
-                    <Header url={url} generic={generic} weather={weather} parks={parks} sort={sort} updated={updated} search={search} view={view} favourites={favourites} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={() => this.switchViews()}/>
+                    <Header url={url} generic={generic} weather={weather} parks={parks} sort={sort} updated={updated} search={search} view={view} favourites={favourites} menu={menu} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={(view) => this.switchViews(view)} toggleMenu={() => this.toggleMenu()}/>
                 </header>
-                <main ref={c => this.mainDiv = c}>
+                <main className={clsx(menu && 'full')} ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} sort={sort} search={search} view={view} favourites={favourites} error={error} reloadFavourites={() => this.reloadFavourites()}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} sort={sort} search={search} view={view} favourites={favourites} menu={menu} error={error} reloadFavourites={() => this.reloadFavourites()} switchViews={(view) => this.switchViews(view)}/>
                         <PrivacyPolicy path="/privacy-policy"/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>
                 </main>
-                <footer>
-                    <Footer url={url}/>
-                </footer>
+                {!menu &&
+                    <footer>
+                        <Footer url={url}/>
+                    </footer>
+                }
             </div>
         );
     }

@@ -1,9 +1,17 @@
+const colors = require('tailwindcss/colors');
+
 module.exports = {
     mode: 'jit',
-    purge: ['./frontend/**/*.{js,jsx,ts,tsx}'],
+    content: ['./frontend/**/*.{js,jsx,ts,tsx}'],
     darkMode: 'media',
     theme: {
-        extend: {}
+        extend: {
+            colors: {
+                green: colors.emerald,
+                yellow: colors.amber,
+                purple: colors.violet,
+            }
+        }
     },
     variants: {
         extend: {}

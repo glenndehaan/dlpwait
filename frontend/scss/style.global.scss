@@ -33,6 +33,11 @@ main {
   overflow: auto;
 }
 
+main.full {
+  padding: 15px 10px 15px 10px;
+  margin-bottom: 0;
+}
+
 footer {
   position: fixed;
   bottom: 0;
@@ -63,8 +68,20 @@ article[type="entertainment"] {
   gap: 5px;
 }
 
+@media (min-width: 1024px) {
+  .grid-title-bar-no-notify {
+    grid-template-columns: 1fr 45px 45px 45px 45px;
+  }
+}
+
 .grid-title-bar {
   grid-template-columns: 1fr 45px 45px 45px;
+}
+
+@media (min-width: 1024px) {
+  .grid-title-bar {
+    grid-template-columns: 1fr 45px 45px 45px 45px 45px;
+  }
 }
 
 .construction-color {
