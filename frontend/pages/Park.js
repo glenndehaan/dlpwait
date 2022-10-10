@@ -5,6 +5,7 @@ import Menu from '../components/Menu';
 import Attractions from '../components/Attractions';
 import Entertainment from '../components/Entertainment';
 import Restaurants from '../components/Restaurants';
+import Weather from '../components/Weather';
 
 export default class Park extends Component {
     /**
@@ -38,7 +39,7 @@ export default class Park extends Component {
      * @returns {*}
      */
     render() {
-        const {error, attractions, entertainment, restaurants, park, parks, sort, search, view, favourites, menu, reloadFavourites, switchViews} = this.props;
+        const {error, attractions, entertainment, restaurants, weather, park, parks, sort, search, view, favourites, menu, reloadFavourites, switchViews} = this.props;
 
         if(error) {
             return <Error message="It seems we are unable to connect to the server at the moment. Please try again later..." code="NO_NETWORK_API_OFFLINE" api={!error}/>
@@ -66,6 +67,10 @@ export default class Park extends Component {
 
         if(view === 'restaurants') {
             return <Restaurants park={park} restaurants={restaurants} sort={sort} search={search}/>;
+        }
+
+        if(view === 'weather') {
+            return <Weather weather={weather}/>;
         }
     }
 }

@@ -57,6 +57,14 @@ article[type="entertainment"] {
   grid-template-columns: auto min-content;
 }
 
+article[type="restaurant"] {
+  grid-template-columns: auto 110px;
+}
+
+article[type="weather"] {
+  grid-template-columns: auto 80px;
+}
+
 .grid-services {
   grid-template-columns: min-content;
   white-space: nowrap;
@@ -70,7 +78,7 @@ article[type="entertainment"] {
 
 @media (min-width: 1024px) {
   .grid-title-bar-no-notify {
-    grid-template-columns: 1fr 45px 45px 45px 45px;
+    grid-template-columns: 1fr 45px 45px 45px 45px 45px;
   }
 }
 
@@ -80,7 +88,7 @@ article[type="entertainment"] {
 
 @media (min-width: 1024px) {
   .grid-title-bar {
-    grid-template-columns: 1fr 45px 45px 45px 45px 45px;
+    grid-template-columns: 1fr 45px 45px 45px 45px 45px 45px;
   }
 }
 

@@ -21,6 +21,14 @@ export default {
                     }
                     temperature
                 }
+                hourly {
+                    wmo {
+                        description
+                    }
+                    temperature
+                    rain
+                    time
+                }
             }
 
             parks {

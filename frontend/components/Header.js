@@ -199,6 +199,13 @@ export default class Header extends Component {
                             </svg>
                         </button>
                     </div>
+                    <div className={clsx('flex justify-center items-center mx-auto hidden lg:block', view === 'weather' && 'text-blue-600 dark:text-blue-400')}>
+                        <button aria-label="Weather" onClick={() => switchViews('weather')}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current h-10 w-10">
+                                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+                            </svg>
+                        </button>
+                    </div>
                     {'Notification' in window && 'PushManager' in window &&
                         <div className="flex justify-center items-center mx-auto">
                             <button aria-label="Notifications" onClick={() => this.toggleNotifications()} className={clsx(notifications && 'text-blue-600 dark:text-blue-400')}>
@@ -227,11 +234,11 @@ export default class Header extends Component {
                 </div>
                 <div>
                     <label htmlFor="search" style={{ position: 'absolute', top: '-1000px', left: '-1000px' }}>Search Activities</label>
-                    <input type="text" id="search" autoComplete="off" placeholder={`Search ${view}`} value={search} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white" onKeyUp={(e) => this.updateSearch(e)}/>
+                    <input type="text" id="search" autoComplete="off" placeholder={`Search ${view}`} disabled={view === 'weather'} value={search} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white disabled:bg-gray-100 disabled:dark:bg-transparent" onKeyUp={(e) => this.updateSearch(e)}/>
                 </div>
                 <div className="relative inline-block w-full">
                     <label htmlFor="sort" style={{ position: 'absolute', top: '-1000px', left: '-1000px' }}>Sort Activities</label>
-                    <select id="sort" className="shadow appearance-none border rounded w-full py-2 px-3 pr-7 text-gray-700 mt-1 bg-white leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white" onChange={(e) => this.updateSort(e)}>
+                    <select id="sort" disabled={view === 'weather'} className="shadow appearance-none border rounded w-full py-2 px-3 pr-7 text-gray-700 mt-1 bg-white leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 dark:text-white disabled:bg-gray-100 disabled:dark:bg-transparent" onChange={(e) => this.updateSort(e)}>
                         {view === 'attractions' && favourites.length > 0 && <option selected={sort === "FAVOURITES"} value="FAVOURITES">Favourites</option>}
                         <option selected={sort === "NAME_DESC"} value="NAME_DESC">A-Z</option>
                         <option selected={sort === "NAME_ASC"} value="NAME_ASC">Z-A</option>

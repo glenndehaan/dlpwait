@@ -114,7 +114,8 @@ class App extends Component {
         this.views = [
             'attractions',
             'entertainment',
-            'restaurants'
+            'restaurants',
+            'weather'
         ]
 
         window.site = {};
@@ -311,7 +312,7 @@ class App extends Component {
                 </header>
                 <main className={clsx(menu && 'full')} ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} sort={sort} search={search} view={view} favourites={favourites} menu={menu} error={error} reloadFavourites={() => this.reloadFavourites()} switchViews={(view) => this.switchViews(view)}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} weather={weather} sort={sort} search={search} view={view} favourites={favourites} menu={menu} error={error} reloadFavourites={() => this.reloadFavourites()} switchViews={(view) => this.switchViews(view)}/>
                         <PrivacyPolicy path="/privacy-policy"/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>

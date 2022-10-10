@@ -50,7 +50,7 @@ export default class Restaurants extends Component {
             <div className="grid grid-row-auto gap-4 w-full max-w-5xl px-4 mx-auto">
                 {parkRestaurants.map((item, key) => (
                     <div key={key}>
-                        <article type="attraction" className="grid gap-4 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
+                        <article type="restaurant" className="grid gap-4 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
                             <div className="p-4">
                                 <h2 className="font-bold">{item.name}<br/><span className="text-xs">({item.cuisines.join(', ')}{(item.cuisines.length > 0 && item.serviceTypes.length > 0) ? ', ' : ''}{item.serviceTypes.join(', ')})</span></h2>
                                 <div className="mt-1">
