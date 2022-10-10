@@ -15,5 +15,22 @@ export default {
         }
 
         storage.remove('entertainment_view');
+    },
+
+    /**
+     * Remove the search and sort keys. These have been replaced by view specific keys
+     *
+     * @param storage
+     */
+    1: (storage) => {
+        const searchKey = storage.get('search');
+        const sortKey = storage.get('sort');
+
+        if(searchKey === null && sortKey === null) {
+            return;
+        }
+
+        storage.remove('search');
+        storage.remove('sort');
     }
 };

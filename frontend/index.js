@@ -101,8 +101,8 @@ class App extends Component {
             entertainment: [],
             restaurants: [],
             updated: null,
-            search: storage.get('search') || '',
-            sort: storage.get('sort') || 'NAME_DESC',
+            search: storage.get(`search_${storage.get('view') || 'attractions'}`) || '',
+            sort: storage.get(`sort_${storage.get('view') || 'attractions'}`) || 'NAME_DESC',
             view: storage.get('view') || 'attractions',
             favourites: storage.get('favourites') || [],
             menu: false,
@@ -186,7 +186,7 @@ class App extends Component {
      * @param sort
      */
     updateSort(sort) {
-        storage.set('sort', sort);
+        storage.set(`sort_${this.state.view}`, sort);
 
         this.setState({
             sort
@@ -203,7 +203,7 @@ class App extends Component {
      * @param string
      */
     updateSearch(string) {
-        storage.set('search', string);
+        storage.set(`search_${this.state.view}`, string);
 
         this.setState({
             search: string
@@ -214,7 +214,7 @@ class App extends Component {
      * Reload the favourites into the state
      */
     reloadFavourites() {
-        storage.set('sort', this.state.view === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC');
+        storage.set(`sort_${this.state.view}`, this.state.view === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC');
 
         this.setState({
             favourites: storage.get('favourites') || [],
@@ -230,12 +230,10 @@ class App extends Component {
     switchViews(view = undefined) {
         if(typeof view !== "undefined") {
             storage.set('view', view);
-            storage.set('search', '');
-            storage.set('sort', view === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC');
 
             this.setState({
-                search: '',
-                sort: view === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC',
+                search: storage.get(`search_${view}`) || '',
+                sort: storage.get(`sort_${view}`) || 'NAME_DESC',
                 view: view,
                 menu: false
             });
@@ -255,12 +253,10 @@ class App extends Component {
         const newView = this.views[(currentView + 1) < this.views.length ? currentView + 1 : 0];
 
         storage.set('view', newView);
-        storage.set('search', '');
-        storage.set('sort', newView === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC');
 
         this.setState({
-            search: '',
-            sort: newView === 'attractions' ? this.state.favourites.length > 0 ? 'FAVOURITES' : 'NAME_DESC' : 'NAME_DESC',
+            search: storage.get(`search_${newView}`) || '',
+            sort: storage.get(`sort_${newView}`) || 'NAME_DESC',
             view: newView
         });
 
