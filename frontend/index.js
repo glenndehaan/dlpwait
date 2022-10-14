@@ -306,14 +306,14 @@ class App extends Component {
                 <header>
                     <Header url={url} generic={generic} weather={weather} parks={parks} sort={sort} updated={updated} search={search} view={view} favourites={favourites} menu={menu} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={(view) => this.switchViews(view)} toggleMenu={() => this.toggleMenu()}/>
                 </header>
-                <main className={clsx(menu && 'full')} ref={c => this.mainDiv = c}>
+                <main className={clsx((menu || view === 'weather') && 'full')} ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
                         <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} weather={weather} sort={sort} search={search} view={view} favourites={favourites} menu={menu} error={error} reloadFavourites={() => this.reloadFavourites()} switchViews={(view) => this.switchViews(view)}/>
                         <PrivacyPolicy path="/privacy-policy"/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>
                 </main>
-                {!menu &&
+                {!menu && view !== 'weather' &&
                     <footer>
                         <Footer url={url}/>
                     </footer>
