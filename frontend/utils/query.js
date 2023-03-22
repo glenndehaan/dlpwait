@@ -87,6 +87,10 @@ export default {
                     date
                     language
                 }
+                duration {
+                    hours
+                    minutes
+                }
                 park {
                     name
                     slug

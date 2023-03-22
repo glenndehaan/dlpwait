@@ -84,6 +84,18 @@ export default class Entertainment extends Component {
                                                 <span className="inline-block align-middle">Single Rider</span>
                                             </span>
                                         }
+                                        {(item.duration.hours !== 0 || item.duration.minutes !== 0) &&
+                                            <span className="bg-blue-300 rounded p-1 mr-1 pr-2 text-sm text-black h-8">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 96 960 960" className="fill-current inline-block h-6 w-6 align-middle mr-1">
+                                                    <path d="M360 196v-60h240v60H360Zm90 447h60V413h-60v230Zm30 332q-74 0-139.5-28.5T226 869q-49-49-77.5-114.5T120 615q0-74 28.5-139.5T226 361q49-49 114.5-77.5T480 255q67 0 126 22.5T711 340l51-51 42 42-51 51q36 40 61.5 97T840 615q0 74-28.5 139.5T734 869q-49 49-114.5 77.5T480 975Zm0-60q125 0 212.5-87.5T780 615q0-125-87.5-212.5T480 315q-125 0-212.5 87.5T180 615q0 125 87.5 212.5T480 915Zm0-299Z"/>
+                                                </svg>
+                                                <span className="inline-block align-middle">
+                                                    {item.duration.hours !== 0 ? `${item.duration.hours} h`: ''}
+                                                    {item.duration.hours !== 0 && item.duration.minutes !== 0 ? ', ' : ''}
+                                                    {item.duration.minutes !== 0 ? `${item.duration.minutes} m`: ''}
+                                                </span>
+                                            </span>
+                                        }
                                     </div>
                                 </div>
                             </div>
