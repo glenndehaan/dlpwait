@@ -76,6 +76,14 @@ export default {
                     nextTimeSlotEnd
                     price
                 }
+                history {
+                    waitTime {
+                        standby {
+                            minutes
+                            timestamp
+                        }
+                    }
+                }
             }
 
             entertainment {

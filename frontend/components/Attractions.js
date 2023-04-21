@@ -9,6 +9,17 @@ import date from '../utils/date';
 
 export default class Attractions extends Component {
     /**
+     * Constructor
+     */
+    constructor() {
+        super();
+
+        this.state = {
+            showWaitTimeMetric: false
+        };
+    }
+
+    /**
      * Add/remove an item from the favourites list
      *
      * @param name
@@ -28,11 +39,21 @@ export default class Attractions extends Component {
     }
 
     /**
+     * Shows or hides the wait time metric
+     */
+    toggleWaitTimeMetric() {
+        this.setState({
+            showWaitTimeMetric: !this.state.showWaitTimeMetric
+        });
+    }
+
+    /**
      * Preact render function
      *
      * @returns {*}
      */
     render() {
+        const {showWaitTimeMetric} = this.state;
         const {attractions, park, sort, search, favourites} = this.props;
 
         const parkAttractions = attractions.filter((attraction) => {
@@ -181,6 +202,17 @@ export default class Attractions extends Component {
                                                     <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                                                 </svg>
                                                 <span className="inline-block align-middle">{date.getHoursMinutes(item.openingTime)} - {date.getHoursMinutes(item.closingTime)}</span>
+                                            </span>
+                                        }
+                                        {item.status === "OPERATING" && item.history.waitTime.standby.timestamp &&
+                                            <span onClick={() => this.toggleWaitTimeMetric()} className={clsx("bg-gray-200 rounded p-1 mr-1 pr-2 text-sm text-black h-8 cursor-pointer", item.history.waitTime.standby.minutes === item.waitTime.standby.minutes && "bg-orange-200", item.history.waitTime.standby.minutes < item.waitTime.standby.minutes && "bg-red-200", item.history.waitTime.standby.minutes > item.waitTime.standby.minutes && "bg-green-200")}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="fill-current inline-block h-6 w-6 align-middle mr-1">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                                                </svg>
+                                                {!showWaitTimeMetric && item.history.waitTime.standby.minutes === item.waitTime.standby.minutes && <span className="inline-block align-middle">Average Wait</span>}
+                                                {!showWaitTimeMetric && item.history.waitTime.standby.minutes < item.waitTime.standby.minutes && <span className="inline-block align-middle">Long Wait</span>}
+                                                {!showWaitTimeMetric && item.history.waitTime.standby.minutes > item.waitTime.standby.minutes && <span className="inline-block align-middle">Short Wait</span>}
+                                                {showWaitTimeMetric && <span className="inline-block align-middle">{item.history.waitTime.standby.minutes} min</span>}
                                             </span>
                                         }
                                     </div>
