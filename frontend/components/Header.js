@@ -242,6 +242,7 @@ export default class Header extends Component {
                         {view === 'attractions' && favourites.length > 0 && <option selected={sort === "FAVOURITES"} value="FAVOURITES">Favourites</option>}
                         <option selected={sort === "NAME_DESC"} value="NAME_DESC">A-Z</option>
                         <option selected={sort === "NAME_ASC"} value="NAME_ASC">Z-A</option>
+                        {("geolocation" in navigator && (view === 'attractions' || view === 'restaurants')) && <option selected={sort === "NEAR_ME"} value="NEAR_ME">Near Me (GPS Location)</option>}
                         {view === 'attractions' && <option selected={sort === "WAIT_TIME_STANDBY_DESC"} value="WAIT_TIME_STANDBY_DESC">Shortest Standby Wait Time</option>}
                         {view === 'attractions' && <option selected={sort === "WAIT_TIME_STANDBY_ASC"} value="WAIT_TIME_STANDBY_ASC">Longest Standby Wait Time</option>}
                         {view === 'attractions' && <option selected={sort === "SINGLE_RIDER_AVAILABILITY"} value="SINGLE_RIDER_AVAILABILITY">Single Rider Availability</option>}

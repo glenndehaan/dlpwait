@@ -23,6 +23,7 @@ import storage from './modules/storage';
 import {validateServiceWorkerInstance} from './utils/sw';
 import fetch from './utils/fetch';
 import query from './utils/query';
+import geo from './utils/geo';
 
 import 'tailwindcss/tailwind.css';
 
@@ -108,7 +109,13 @@ class App extends Component {
             menu: false,
             fetch: false,
             error: false,
-            updateAvailableDialog: false
+            updateAvailableDialog: false,
+            gps: {
+                error: false,
+                denied: false,
+                latitude: null,
+                longitude: null
+            }
         }
 
         this.views = [
@@ -122,6 +129,7 @@ class App extends Component {
         window.site.production = process.env.NODE_ENV === 'production';
 
         this.mainDiv = null;
+        this.gpsUpdate = null;
     }
 
     /**
@@ -134,6 +142,10 @@ class App extends Component {
         setInterval(() => {
             this.getData();
         }, 2 * 60 * 1000);
+
+        if(this.state.sort === 'NEAR_ME') {
+            this.loadGpsData();
+        }
     }
 
     /**
@@ -192,6 +204,12 @@ class App extends Component {
             sort
         });
 
+        if(sort === 'NEAR_ME') {
+            this.loadGpsData();
+        } else {
+            this.unloadGpsData();
+        }
+
         splitbee.track("Sort", {
             type: sort
         });
@@ -238,6 +256,12 @@ class App extends Component {
                 menu: false
             });
 
+            if(storage.get(`sort_${view}`) !== "NEAR_ME") {
+                this.unloadGpsData();
+            } else {
+                this.loadGpsData();
+            }
+
             if(this.mainDiv !== null) {
                 this.mainDiv.scrollTop = 0;
             }
@@ -260,6 +284,12 @@ class App extends Component {
             view: newView
         });
 
+        if(storage.get(`sort_${newView}`) !== "NEAR_ME") {
+            this.unloadGpsData();
+        } else {
+            this.loadGpsData();
+        }
+
         if(this.mainDiv !== null) {
             this.mainDiv.scrollTop = 0;
         }
@@ -279,6 +309,52 @@ class App extends Component {
     }
 
     /**
+     * Loads new GPS data
+     */
+    async loadGpsData() {
+        const currentPosition = await geo.getCurrentPosition();
+        this.setState({
+            gps: {
+                error: currentPosition.error,
+                denied: currentPosition.denied,
+                latitude: currentPosition.latitude,
+                longitude: currentPosition.longitude
+            }
+        });
+
+        this.gpsUpdate = navigator.geolocation.watchPosition((pos) => {
+            console.warn('GPS Update!');
+
+            this.setState({
+                gps: {
+                    error: false,
+                    denied: false,
+                    latitude: pos.coords.latitude,
+                    longitude: pos.coords.longitude
+                }
+            });
+        });
+    }
+
+    /**
+     * Unloads the GPS data
+     */
+    unloadGpsData() {
+        if(this.gpsUpdate !== null) {
+            navigator.geolocation.clearWatch(this.gpsUpdate);
+        }
+
+        this.setState({
+            gps: {
+                error: false,
+                denied: false,
+                latitude: null,
+                longitude: null
+            }
+        });
+    }
+
+    /**
      * Updates the app
      */
     update() {
@@ -291,7 +367,7 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {fetch, error, url, generic, weather, parks, attractions, entertainment, restaurants, sort, search, view, favourites, menu, updated, updateAvailableDialog} = this.state;
+        const {fetch, error, url, generic, weather, parks, attractions, entertainment, restaurants, sort, search, view, favourites, menu, gps, updated, updateAvailableDialog} = this.state;
 
         // Prevent layout shifts
         if(!fetch) {
@@ -308,7 +384,7 @@ class App extends Component {
                 </header>
                 <main className={clsx((menu || view === 'weather') && 'full')} ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} weather={weather} sort={sort} search={search} view={view} favourites={favourites} menu={menu} error={error} reloadFavourites={() => this.reloadFavourites()} switchViews={(view) => this.switchViews(view)}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} weather={weather} sort={sort} search={search} view={view} favourites={favourites} menu={menu} gps={gps} error={error} reloadFavourites={() => this.reloadFavourites()} switchViews={(view) => this.switchViews(view)}/>
                         <PrivacyPolicy path="/privacy-policy"/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>

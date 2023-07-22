@@ -51,6 +51,10 @@ export default {
                     slug
                 }
                 region
+                geo {
+                    lat
+                    lng
+                }
                 openingTime
                 closingTime
                 services {
@@ -131,6 +135,10 @@ export default {
                     slug
                 }
                 region
+                geo {
+                    lat
+                    lng
+                }
                 category
                 cuisines
                 serviceTypes
