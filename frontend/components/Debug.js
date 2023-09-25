@@ -11,14 +11,14 @@ export default class Debug extends Component {
     render() {
         const {store} = this.props;
         // eslint-disable-next-line no-unused-vars
-        const {attractions, entertainment, gps, restaurants, parks, weather, favourites, updateAvailableDialog, ...restStore} = {...store};
+        const {attractions, entertainment, gps, restaurants, parks, weather, favourites, updateAvailableDialog, generic, ...restStore} = {...store, ...store.generic};
 
         return (
             <div className="fixed w-full bottom-0 left-0 z-debug bg-gray-900/[.80] pointer-events-none">
-                <div className="grid grid-debug gap-2">
+                <div className="p-1 grid grid-cols-2 gap-2">
                     <div className="text-debug">
                         <h2 className="italic font-bold">STATES</h2>
-                        <pre className="text-debug overflow-auto">{JSON.stringify(restStore, undefined, 2)}</pre>
+                        <pre className="text-debug overflow-auto">{Object.keys(restStore).map((item) => `"${item}": ${JSON.stringify(restStore[item])}\n`)}</pre>
                     </div>
                     <div className="text-debug">
                         <h2 className="italic font-bold">APP VERSION</h2>
@@ -30,10 +30,9 @@ export default class Debug extends Component {
                         <h2 className="italic font-bold">NOTIFICATION</h2>
                         <pre className="overflow-auto">{'Notification' in window ? Notification.permission : 'not available'}</pre>
                         <h2 className="italic font-bold">GPS</h2>
-                        <pre className="text-debug overflow-auto">{JSON.stringify(store.gps, undefined, 2)}</pre>
+                        <pre className="text-debug overflow-auto">{Object.keys(store.gps).map((item) => `"${item}": ${JSON.stringify(store.gps[item])}\n`)}</pre>
                     </div>
                 </div>
-                <pre className="text-debug overflow-auto">{navigator.userAgent} ({window.innerWidth}x{window.innerHeight}, {window.devicePixelRatio})</pre>
             </div>
         );
     }
