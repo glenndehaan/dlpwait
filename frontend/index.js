@@ -13,6 +13,7 @@ import clsx from 'clsx';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Dialog from './components/Dialog';
+import Debug from './components/Debug';
 
 import Redirect from './pages/Redirect';
 import Park from './pages/Park';
@@ -107,6 +108,7 @@ class App extends Component {
             view: storage.get('view') || 'attractions',
             favourites: storage.get('favourites') || [],
             menu: false,
+            debug: false,
             fetch: false,
             error: false,
             updateAvailableDialog: false,
@@ -172,7 +174,7 @@ class App extends Component {
             this.setState({
                 fetch: true,
                 error: true,
-                updated: new Date()
+                updated: null
             });
         }
     }
@@ -309,6 +311,15 @@ class App extends Component {
     }
 
     /**
+     * Toggle the debug state
+     */
+    toggleDebug() {
+        this.setState({
+            debug: !this.state.debug
+        });
+    }
+
+    /**
      * Loads new GPS data
      */
     async loadGpsData() {
@@ -367,7 +378,7 @@ class App extends Component {
      * @returns {*}
      */
     render() {
-        const {fetch, error, url, generic, weather, parks, attractions, entertainment, restaurants, sort, search, view, favourites, menu, gps, updated, updateAvailableDialog} = this.state;
+        const {fetch, error, url, generic, weather, parks, attractions, entertainment, restaurants, sort, search, view, favourites, menu, debug, gps, updated, updateAvailableDialog} = this.state;
 
         // Prevent layout shifts
         if(!fetch) {
@@ -379,12 +390,20 @@ class App extends Component {
                 {updateAvailableDialog &&
                     <Dialog title="Update Ready!" description="Sorry for the interruption but we have an important update available... Click the update button below to update now." button="Update" onClick={() => this.update()}/>
                 }
+                {debug &&
+                    <Debug store={this.state}/>
+                }
                 <header>
-                    <Header url={url} generic={generic} weather={weather} parks={parks} sort={sort} updated={updated} search={search} view={view} favourites={favourites} menu={menu} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={(view) => this.switchViews(view)} toggleMenu={() => this.toggleMenu()}/>
+                    {debug &&
+                        <div className="col-span-2 text-center font-bold py-2 construction-color">
+                            Debug / Developer Mode Active
+                        </div>
+                    }
+                    <Header url={url} generic={generic} weather={weather} parks={parks} sort={sort} updated={updated} search={search} view={view} favourites={favourites} menu={menu} debug={debug} updateData={() => this.getData()} updateSort={(sort) => this.updateSort(sort)} updateSearch={(string) => this.updateSearch(string)} switchViews={(view) => this.switchViews(view)} toggleMenu={() => this.toggleMenu()} toggleDebug={() => this.toggleDebug()}/>
                 </header>
                 <main className={clsx((menu || view === 'weather') && 'full')} ref={c => this.mainDiv = c}>
                     <Router onChange={(e) => this.routerUpdate(e)}>
-                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} weather={weather} sort={sort} search={search} view={view} favourites={favourites} menu={menu} gps={gps} error={error} reloadFavourites={() => this.reloadFavourites()} switchViews={(view) => this.switchViews(view)}/>
+                        <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} weather={weather} sort={sort} search={search} view={view} favourites={favourites} menu={menu} debug={debug} gps={gps} error={error} reloadFavourites={() => this.reloadFavourites()} switchViews={(view) => this.switchViews(view)}/>
                         <PrivacyPolicy path="/privacy-policy"/>
                         <Redirect path="/" to="/disneyland-park"/>
                     </Router>

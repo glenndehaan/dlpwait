@@ -41,7 +41,12 @@ export default class Park extends Component {
      * @returns {*}
      */
     render() {
-        const {error, attractions, entertainment, restaurants, weather, park, parks, sort, search, view, favourites, menu, gps, reloadFavourites, switchViews} = this.props;
+        const {error, attractions, entertainment, restaurants, weather, park, parks, sort, search, view, favourites, menu, debug, gps, reloadFavourites, switchViews} = this.props;
+
+        // Ensure menu is always available. Even if an error comes next...
+        if(menu) {
+            return <Menu view={view} switchViews={switchViews}/>;
+        }
 
         if(error) {
             return <Error message="It seems we are unable to connect to the server at the moment. Please try again later..." code="NO_NETWORK_API_OFFLINE" api={!error}/>
@@ -69,24 +74,20 @@ export default class Park extends Component {
             return <Error message="It seems you are currently not within the parks! This feature is therefore unavailable..." code="GPS_TO_FAR_FROM_STATIC_POINT"/>
         }
 
-        if(menu) {
-            return <Menu view={view} switchViews={switchViews}/>;
-        }
-
         if(view === 'attractions') {
-            return <Attractions park={park} attractions={attractions} sort={sort} search={search} favourites={favourites} reloadFavourites={reloadFavourites} gps={gps}/>;
+            return <Attractions park={park} attractions={attractions} sort={sort} search={search} favourites={favourites} reloadFavourites={reloadFavourites} gps={gps} debug={debug}/>;
         }
 
         if(view === 'entertainment') {
-            return <Entertainment park={park} entertainment={entertainment} sort={sort} search={search}/>;
+            return <Entertainment park={park} entertainment={entertainment} sort={sort} search={search} debug={debug}/>;
         }
 
         if(view === 'restaurants') {
-            return <Restaurants park={park} restaurants={restaurants} sort={sort} search={search} gps={gps}/>;
+            return <Restaurants park={park} restaurants={restaurants} sort={sort} search={search} gps={gps} debug={debug}/>;
         }
 
         if(view === 'weather') {
-            return <Weather weather={weather}/>;
+            return <Weather weather={weather} debug={debug}/>;
         }
     }
 }

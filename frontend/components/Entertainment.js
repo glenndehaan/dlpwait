@@ -12,7 +12,7 @@ export default class Entertainment extends Component {
      * @returns {*}
      */
     render() {
-        const {entertainment, park, sort, search} = this.props;
+        const {entertainment, park, sort, search, debug} = this.props;
 
         const parkEntertainment = entertainment.filter((entertainment) => {
             return entertainment.park.slug === park && (entertainment.schedules.length > 0 || entertainment.virtualQueue.available);
@@ -138,6 +138,9 @@ export default class Entertainment extends Component {
                                     ))}
                                 </div>
                             </div>
+                        }
+                        {debug &&
+                            <pre className="text-debug">{JSON.stringify(item, undefined, 2)}</pre>
                         }
                     </div>
                 ))}

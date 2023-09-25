@@ -11,7 +11,7 @@ export default class Weather extends Component {
      * @returns {*}
      */
     render() {
-        const {weather} = this.props;
+        const {weather, debug} = this.props;
 
         const weatherForecast = weather.hourly.filter((forecast) => {
             return !date.checkPassedDateTime(forecast.time);
@@ -54,6 +54,9 @@ export default class Weather extends Component {
                                 </div>
                             </div>
                         </article>
+                        {debug &&
+                            <pre className="text-debug">{JSON.stringify(item, undefined, 2)}</pre>
+                        }
                     </div>
                 ))}
             </div>

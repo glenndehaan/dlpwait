@@ -13,7 +13,7 @@ export default class Restaurants extends Component {
      * @returns {*}
      */
     render() {
-        const {restaurants, park, sort, search, gps} = this.props;
+        const {restaurants, park, sort, search, gps, debug} = this.props;
 
         const parkRestaurants = restaurants.filter((restaurant) => {
             return restaurant.park.slug === park && restaurant.status !== "UNDEFINED" && restaurant.active;
@@ -149,6 +149,9 @@ export default class Restaurants extends Component {
                                     </a>
                                 </div>
                             </div>
+                        }
+                        {debug &&
+                            <pre className="text-debug">{JSON.stringify(item, undefined, 2)}</pre>
                         }
                     </div>
                 ))}

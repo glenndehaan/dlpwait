@@ -17,13 +17,14 @@ export default class Header extends Component {
         };
 
         this.publicVapidKey = 'BPvaT_Yfw2yZHH_jO_QlOl8OsrLM5U_KwJtjRioXk90zalcrWTAYXYjUMipt9D4S7oqoYcLnh8YyqPE9FDza3Jw';
+        this.debugClicks = 0;
     }
 
     /**
      * Function runs then component mounts
      */
     async componentWillMount() {
-        if('Notification' in window && 'PushManager' in window) {
+        if('serviceWorker' in navigator && 'Notification' in window && 'PushManager' in window) {
             const registration = await navigator.serviceWorker.ready;
             const subscription = await registration.pushManager.getSubscription();
 
@@ -147,6 +148,22 @@ export default class Header extends Component {
     }
 
     /**
+     * Toggles the debug on quad taps
+     */
+    toggleDebug() {
+        this.debugClicks++;
+
+        setTimeout(() => {
+            this.debugClicks = 0;
+        }, 1000);
+
+        if(this.debugClicks === 4) {
+            this.props.toggleDebug();
+            console.warn('Debug Mode Triggered!!');
+        }
+    }
+
+    /**
      * Preact render function
      *
      * @returns {*}
@@ -166,7 +183,7 @@ export default class Header extends Component {
         }) : false;
 
         return (
-            <div className={clsx("grid grid-cols-2 gap-1 p-2 px-4 bg-white dark:bg-gray-800", !parkOpen && !parkEMT && "grid-rows-2" , (parkOpen || parkEMT) && "grid-rows-3")}>
+            <div className={clsx("grid grid-cols-2 gap-1 p-2 px-4 bg-white dark:bg-gray-800", !parkOpen && !parkEMT && "grid-rows-2" , (parkOpen || parkEMT) && "grid-rows-3")} onClick={() => this.toggleDebug()}>
                 <div className={clsx("col-span-2 grid-title-bar-no-notify", 'Notification' in window && 'PushManager' in window && "grid-title-bar")}>
                     <div className="text-3xl font-bold flex items-center">
                         <a href="/">

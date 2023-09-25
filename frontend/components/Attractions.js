@@ -55,7 +55,7 @@ export default class Attractions extends Component {
      */
     render() {
         const {showWaitTimeMetric} = this.state;
-        const {attractions, park, sort, search, favourites, gps} = this.props;
+        const {attractions, park, sort, search, favourites, gps, debug} = this.props;
 
         const parkAttractions = attractions.filter((attraction) => {
             return attraction.park.slug === park && attraction.status !== "UNDEFINED";
@@ -268,6 +268,9 @@ export default class Attractions extends Component {
                                     </div>
                                 }
                             </div>
+                        }
+                        {debug &&
+                            <pre className="text-debug">{JSON.stringify(item, undefined, 2)}</pre>
                         }
                     </div>
                 ))}

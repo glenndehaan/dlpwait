@@ -8,6 +8,21 @@ html, body {
   }
 }
 
+.text-debug {
+  font-size: 0.60rem;
+  line-height: 1rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.z-debug {
+  z-index: 10000;
+}
+
+.grid-debug {
+  grid-template-columns: 1fr 170px;
+}
+
 #root {
   height: 100vh;
 
