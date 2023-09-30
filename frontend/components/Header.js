@@ -271,6 +271,7 @@ export default class Header extends Component {
                         {view === 'attractions' && <option selected={sort === "ATTRACTION_STATUS_CLOSED"} value="ATTRACTION_STATUS_CLOSED">Status: Closed</option>}
                         {view === 'entertainment' && <option selected={sort === "MEET_AND_GREET_CATEGORY"} value="MEET_AND_GREET_CATEGORY">Meet & Greets</option>}
                         {view === 'entertainment' && <option selected={sort === "SHOWS_CATEGORY"} value="SHOWS_CATEGORY">Shows</option>}
+                        {view === 'entertainment' && <option selected={sort === "VIRTUAL_QUEUE"} value="VIRTUAL_QUEUE">Virtual Queue</option>}
                         {view === 'restaurants' && <option selected={sort === "MOBILE_ORDER_AVAILABILITY"} value="MOBILE_ORDER_AVAILABILITY">Mobile Order Availability</option>}
                         {view === 'restaurants' && <option selected={sort === "RESERVATION_REQUIRED"} value="RESERVATION_REQUIRED">Reservation Required</option>}
                         {view === 'restaurants' && <option selected={sort === "COUNTER_SERVICE"} value="COUNTER_SERVICE">Counter Service</option>}

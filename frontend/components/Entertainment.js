@@ -46,6 +46,12 @@ export default class Entertainment extends Component {
                 if ((a.category === 'Character Experience - Meet & Greet') < (b.category === 'Character Experience - Meet & Greet')) return -1;
             }
 
+            // Sort/group by virtual queue
+            if(sort === "VIRTUAL_QUEUE") {
+                if (a.services.virtualQueue > b.services.virtualQueue) return -1;
+                if (a.services.virtualQueue < b.services.virtualQueue) return 1;
+            }
+
             // Sort/group attractions alphabetical on name
             if (a.name > b.name) return sort === "NAME_DESC" ? 1 : sort === "NAME_ASC" ? -1 : 1;
             if (a.name < b.name) return sort === "NAME_DESC" ? -1 : sort === "NAME_ASC" ? 1 : -1;
