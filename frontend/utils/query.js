@@ -88,6 +88,14 @@ export default {
                         }
                     }
                 }
+                prediction {
+                    waitTime {
+                        standby {
+                            minutes
+                            timestamp
+                        }
+                    }
+                }
             }
 
             entertainment {
