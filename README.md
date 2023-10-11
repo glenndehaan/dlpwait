@@ -2,15 +2,16 @@
 
 A wait times / entertainment schedule app for Disneyland Paris
 
-![screenshot1](https://user-images.githubusercontent.com/7496187/152312239-29494559-9750-4472-bb9b-d879119ed50b.png)
-![screenshot2](https://user-images.githubusercontent.com/7496187/152312242-1c11d335-8b1a-4a36-9b6a-c6ec67f6fe70.png)
+![screenshot1](https://github.com/glenndehaan/dlpwait/assets/7496187/51da936d-9bf4-42de-8c33-17ff2be056f7)
+![screenshot2](https://github.com/glenndehaan/dlpwait/assets/7496187/c9d14656-c2d9-4cd9-95fa-855aa9b7c825)
 
 ## Structure
 - ES6 Javascript
 - Preact
-- Unistore
-- Mitt
+- Preact Router
 - Webpack
+- Tailwind
+- Splitbee
 
 ## Features
 - Live wait times for both Disneyland Park and Walt Disney Studios parks
@@ -21,14 +22,14 @@ A wait times / entertainment schedule app for Disneyland Paris
 https://dlpwait.com
 
 ## Development Usage
-- Install NodeJS 14.0 or higher.
+- Install NodeJS 16.0 or higher.
 - Run `npm ci` in the root folder
 - Run `npm start` in the root folder
 
 Then open up your favorite browser and go to http://localhost:3467/
 
 ## Build Usage
-- Install NodeJS 14.0 or higher.
+- Install NodeJS 16.0 or higher.
 - Run `npm ci` in the root folder
 - Run `npm run build` in the root folder
 

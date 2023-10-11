@@ -40,26 +40,42 @@
       "purpose": "maskable"
     }
   ],
-  "screenshots" : [
+  "screenshots": [
     {
-      "src": "./screenshots/screenshot1.png",
-      "sizes": "1442x3202",
-      "type": "image/png"
+      "src": "./screenshots/mobile_screenshot_1.png",
+      "sizes": "413x877",
+      "type": "image/png",
+      "form_factor": "narrow"
     },
     {
-      "src": "./screenshots/screenshot2.png",
-      "sizes": "1442x3202",
-      "type": "image/png"
+      "src": "./screenshots/mobile_screenshot_2.png",
+      "sizes": "413x877",
+      "type": "image/png",
+      "form_factor": "narrow"
     },
     {
-      "src": "./screenshots/screenshot3.png",
-      "sizes": "1442x3202",
-      "type": "image/png"
+      "src": "./screenshots/mobile_screenshot_3.png",
+      "sizes": "413x877",
+      "type": "image/png",
+      "form_factor": "narrow"
     },
     {
-      "src": "./screenshots/screenshot4.png",
-      "sizes": "1442x3202",
-      "type": "image/png"
+      "src": "./screenshots/desktop_screenshot_1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "./screenshots/desktop_screenshot_2.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "./screenshots/desktop_screenshot_3.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
     }
   ],
   "start_url": "/",
