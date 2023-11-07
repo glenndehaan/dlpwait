@@ -59,7 +59,7 @@ export default class Attractions extends Component {
         const {attractions, park, sort, search, favourites, gps, debug} = this.props;
 
         const parkAttractions = attractions.filter((attraction) => {
-            return attraction.park.slug === park && attraction.status !== "UNDEFINED";
+            return debug ? (attraction.park.slug === park) : (attraction.park.slug === park && attraction.status !== "UNDEFINED");
         }).sort((a, b) => {
             // Remap status text to numeric number to improve sort
             const statusMap = {
