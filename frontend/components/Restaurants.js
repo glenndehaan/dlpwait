@@ -58,6 +58,19 @@ export default class Restaurants extends Component {
 
         return (
             <div className="grid grid-row-auto gap-4 w-full max-w-5xl px-4 mx-auto">
+                {sort === 'NEAR_ME' && Math.round(geo.getDistanceFromLatLonInKm(gps.latitude, gps.longitude, parkRestaurants[0].geo.lat, parkRestaurants[0].geo.lng) * 1000) > 500 &&
+                    <div>
+                        <article type="warning" className="grid gap-4 border rounded-lg shadow-lg bg-yellow-700 text-white dark:bg-yellow-700 dark:border-gray-700">
+                            <div className="p-4">
+                                <h2>
+                                    <span className="align-middle font-bold">
+                                        It looks like you are far away from the nearest restaurant. Please check the location settings from your browser and make sure &quot;Exact Location&quot; is turned on.
+                                    </span>
+                                </h2>
+                            </div>
+                        </article>
+                    </div>
+                }
                 {parkRestaurants.map((item, key) => (
                     <div key={key}>
                         <article type="restaurant" className="grid gap-4 border rounded-lg shadow-lg bg-white dark:bg-gray-800 dark:border-gray-700">
