@@ -15,7 +15,7 @@ export default class Entertainment extends Component {
         const {entertainment, park, sort, search, debug} = this.props;
 
         const parkEntertainment = entertainment.filter((entertainment) => {
-            return entertainment.park.slug === park && (entertainment.schedules.length > 0 || entertainment.virtualQueue.available);
+            return debug ? (entertainment.park.slug === park) : (entertainment.park.slug === park && (entertainment.schedules.length > 0 || entertainment.virtualQueue.available));
         }).filter((entertainment) => {
             let items = 0;
 

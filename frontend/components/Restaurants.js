@@ -16,7 +16,7 @@ export default class Restaurants extends Component {
         const {restaurants, park, sort, search, gps, debug} = this.props;
 
         const parkRestaurants = restaurants.filter((restaurant) => {
-            return restaurant.park.slug === park && restaurant.status !== "UNDEFINED" && restaurant.active;
+            return debug ? (restaurant.park.slug === park && restaurant.active) : (restaurant.park.slug === park && restaurant.status !== "UNDEFINED" && restaurant.active);
         }).sort((a, b) => {
             // Sort/group by distance (Location/GPS)
             if(sort === "NEAR_ME") {
