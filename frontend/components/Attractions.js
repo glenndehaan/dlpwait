@@ -103,6 +103,12 @@ export default class Attractions extends Component {
                 if (a.services.photoPass < b.services.photoPass) return 1;
             }
 
+            // Sort/group attractions by region
+            if(sort === "REGION") {
+                if (a.region > b.region) return 1;
+                if (a.region < b.region) return -1;
+            }
+
             // Sort/group attractions on status first
             if(sort !== "ATTRACTION_STATUS_UNDER_CONSTRUCTION" && sort !== "ATTRACTION_STATUS_TEMPORARY_CLOSED" && sort !== "ATTRACTION_STATUS_CLOSED") {
                 if (statusMap[a.status] > statusMap[b.status]) return sort === "ATTRACTION_STATUS" ? -1 : 1;

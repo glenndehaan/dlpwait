@@ -6,6 +6,15 @@ export default {
         {
             generic {
                 waitTimesUpdated
+                status {
+                    weather
+                    parks
+                    activities
+                    restaurants
+                    waitTimes
+                    premierAccess
+                    virtualQueue
+                }
             }
 
             weather {

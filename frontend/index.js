@@ -83,7 +83,16 @@ class App extends Component {
             url: '/',
             parks: [],
             generic: {
-                waitTimesUpdated: new Date('0')
+                waitTimesUpdated: new Date('0'),
+                status: {
+                    weather: false,
+                    parks: false,
+                    activities: false,
+                    restaurants: false,
+                    waitTimes: false,
+                    premierAccess: false,
+                    virtualQueue: false
+                }
             },
             weather: {
                 current: {
@@ -161,7 +170,8 @@ class App extends Component {
                 fetch: true,
                 error: false,
                 generic: {
-                    waitTimesUpdated: new Date(data.data.generic.waitTimesUpdated)
+                    waitTimesUpdated: new Date(data.data.generic.waitTimesUpdated),
+                    status: data.data.generic.status
                 },
                 weather: data.data.weather,
                 parks: data.data.parks,

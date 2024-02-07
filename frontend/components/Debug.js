@@ -11,7 +11,7 @@ export default class Debug extends Component {
     render() {
         const {store} = this.props;
         // eslint-disable-next-line no-unused-vars
-        const {attractions, entertainment, gps, restaurants, parks, weather, favourites, updateAvailableDialog, generic, ...restStore} = {...store, ...store.generic};
+        const {attractions, entertainment, gps, restaurants, parks, weather, favourites, updateAvailableDialog, generic, status, ...restStore} = {...store, ...store.generic, ...store.generic.status};
 
         return (
             <div className="fixed w-full bottom-0 left-0 z-debug bg-gray-900/[.80] pointer-events-none">

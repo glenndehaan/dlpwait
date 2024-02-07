@@ -52,6 +52,12 @@ export default class Entertainment extends Component {
                 if (a.services.virtualQueue < b.services.virtualQueue) return 1;
             }
 
+            // Sort/group by region
+            if(sort === "REGION") {
+                if (a.region > b.region) return 1;
+                if (a.region < b.region) return -1;
+            }
+
             // Sort/group attractions alphabetical on name
             if (a.name > b.name) return sort === "NAME_DESC" ? 1 : sort === "NAME_ASC" ? -1 : 1;
             if (a.name < b.name) return sort === "NAME_DESC" ? -1 : sort === "NAME_ASC" ? 1 : -1;

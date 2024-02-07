@@ -259,6 +259,7 @@ export default class Header extends Component {
                         {view === 'attractions' && favourites.length > 0 && <option selected={sort === "FAVOURITES"} value="FAVOURITES">Favourites</option>}
                         <option selected={sort === "NAME_DESC"} value="NAME_DESC">A-Z</option>
                         <option selected={sort === "NAME_ASC"} value="NAME_ASC">Z-A</option>
+                        <option selected={sort === "REGION"} value="REGION">Region</option>
                         {("geolocation" in navigator && (view === 'attractions' || view === 'restaurants')) && <option selected={sort === "NEAR_ME"} value="NEAR_ME">Near Me (GPS Location)</option>}
                         {view === 'attractions' && <option selected={sort === "WAIT_TIME_STANDBY_DESC"} value="WAIT_TIME_STANDBY_DESC">Shortest Standby Wait Time</option>}
                         {view === 'attractions' && <option selected={sort === "WAIT_TIME_STANDBY_ASC"} value="WAIT_TIME_STANDBY_ASC">Longest Standby Wait Time</option>}
@@ -302,10 +303,10 @@ export default class Header extends Component {
                             Park update: {date.getDateFormatted(generic.waitTimesUpdated)}
                         </div>
                         <div className="timer timer-content-3">
-                            Current weather: {weather.current.wmo.description}, {weather.current.temperature}&#8451;
+                            Current weather: {weather.current ? weather.current.wmo.description : ''}, {weather.current ? weather.current.temperature : ''}&#8451;
                         </div>
                         <div className="timer timer-content-4">
-                            Forecasted weather: {weather.expected.wmo.description}, {weather.expected.temperature}&#8451;
+                            Forecasted weather: {weather.expected ? weather.expected.wmo.description : ''}, {weather.expected ? weather.expected.temperature : ''}&#8451;
                         </div>
                     </div>
                 }
