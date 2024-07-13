@@ -53,6 +53,7 @@ export default {
 
             attractions {
                 active
+                hide
                 status
                 name
                 park {
