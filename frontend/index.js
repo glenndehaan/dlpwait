@@ -7,7 +7,6 @@ if (process.env.NODE_ENV === 'development') {
 
 import {h, render, Component} from 'preact';
 import Router from 'preact-router';
-import splitbee from '@splitbee/web';
 import clsx from 'clsx';
 
 import Header from './components/Header';
@@ -52,8 +51,6 @@ class App extends Component {
      */
     constructor() {
         super();
-
-        splitbee.init();
 
         if ('serviceWorker' in navigator) {
             if(navigator.serviceWorker.controller !== null) {
@@ -222,7 +219,7 @@ class App extends Component {
             this.unloadGpsData();
         }
 
-        splitbee.track("Sort", {
+        window.umami.track("Sort", {
             type: sort
         });
     }
@@ -278,7 +275,7 @@ class App extends Component {
                 this.mainDiv.scrollTop = 0;
             }
 
-            splitbee.track("Switch Views", {
+            window.umami.track("Switch Views", {
                 view: view
             });
 
@@ -306,7 +303,7 @@ class App extends Component {
             this.mainDiv.scrollTop = 0;
         }
 
-        splitbee.track("Switch Views", {
+        window.umami.track("Switch Views", {
             view: newView
         });
     }

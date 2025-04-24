@@ -1,6 +1,5 @@
 import {h, Component} from 'preact';
 import clsx from 'clsx';
-import splitbee from '@splitbee/web';
 
 import arrays from '../utils/arrays';
 import date from '../utils/date';
@@ -91,7 +90,7 @@ export default class Header extends Component {
             }
         }
 
-        splitbee.track("Toggle Notifications");
+        window.umami.track("Toggle Notifications");
     }
 
     /**
