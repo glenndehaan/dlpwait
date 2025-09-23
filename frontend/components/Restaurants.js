@@ -18,6 +18,15 @@ export default class Restaurants extends Component {
         const parkRestaurants = restaurants.filter((restaurant) => {
             return debug ? (restaurant.park.slug === park && restaurant.active) : (restaurant.park.slug === park && restaurant.status !== "UNDEFINED" && restaurant.active);
         }).sort((a, b) => {
+            // Remap status text to numeric number to improve sort
+            const statusMap = {
+                OPERATING: 1,
+                REFURBISHMENT: 4,
+                DOWN: 2,
+                CLOSED: 3,
+                UNDEFINED: 5
+            };
+
             // Sort/group by distance (Location/GPS)
             if(sort === "NEAR_ME") {
                 const distanceA = geo.getDistanceFromLatLonInKm(gps.latitude, gps.longitude, a.geo.lat, a.geo.lng);
@@ -49,6 +58,16 @@ export default class Restaurants extends Component {
             if(sort === "REGION") {
                 if (a.region > b.region) return 1;
                 if (a.region < b.region) return -1;
+            }
+
+            // Sort/group on status first
+            if (statusMap[a.status] > statusMap[b.status]) return 1;
+            if (statusMap[a.status] < statusMap[b.status]) return -1;
+
+            // Sort/group by opening time
+            if(sort === "TIME_OPEN") {
+                if (a.openingTime > b.openingTime) return 1;
+                if (a.openingTime < b.openingTime) return -1;
             }
 
             // Sort/group attractions alphabetical on name

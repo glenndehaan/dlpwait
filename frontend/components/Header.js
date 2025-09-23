@@ -265,6 +265,7 @@ export default class Header extends Component {
                         {view === 'attractions' && <option selected={sort === "SINGLE_RIDER_AVAILABILITY"} value="SINGLE_RIDER_AVAILABILITY">Single Rider Availability</option>}
                         {view === 'attractions' && <option selected={sort === "PREMIER_ACCESS_AVAILABILITY"} value="PREMIER_ACCESS_AVAILABILITY">Premier Access Availability</option>}
                         {(view === 'attractions' || view === 'entertainment') && <option selected={sort === "PHOTO_PASS_AVAILABILITY"} value="PHOTO_PASS_AVAILABILITY">Photo Pass Availability</option>}
+                        {(view === 'attractions' || view === 'restaurants') && <option selected={sort === "TIME_OPEN"} value="TIME_OPEN">Opening Time</option>}
                         {view === 'attractions' && <option selected={sort === "ATTRACTION_STATUS"} value="ATTRACTION_STATUS">Attraction Status</option>}
                         {view === 'attractions' && <option selected={sort === "ATTRACTION_STATUS_UNDER_CONSTRUCTION"} value="ATTRACTION_STATUS_UNDER_CONSTRUCTION">Status: Under Construction</option>}
                         {view === 'attractions' && <option selected={sort === "ATTRACTION_STATUS_TEMPORARY_CLOSED"} value="ATTRACTION_STATUS_TEMPORARY_CLOSED">Status: Temporary Closed (Breakdown)</option>}

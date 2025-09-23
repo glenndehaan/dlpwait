@@ -164,6 +164,12 @@ export default class Attractions extends Component {
                 if (a.waitTime.standby.minutes < b.waitTime.standby.minutes) return 1;
             }
 
+            // Sort/group attractions by opening time
+            if(sort === "TIME_OPEN") {
+                if (a.openingTime > b.openingTime) return 1;
+                if (a.openingTime < b.openingTime) return -1;
+            }
+
             // Sort/group attractions alphabetical on name
             if (a.name > b.name) return sort === "NAME_DESC" ? 1 : sort === "NAME_ASC" ? -1 : 1;
             if (a.name < b.name) return sort === "NAME_DESC" ? -1 : sort === "NAME_ASC" ? 1 : -1;
