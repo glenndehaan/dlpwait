@@ -37,16 +37,6 @@ const config = {
     module: {
         rules: [
             {
-                enforce: "pre",
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
-                options: {
-                    failOnError: true,
-                    failOnWarning: false
-                }
-            },
-            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
@@ -90,8 +80,7 @@ const config = {
                             url: false,
                             sourceMap: !prod,
                         }
-                    },
-                    `sass-loader`
+                    }
                 ]
             },
             {
@@ -108,8 +97,7 @@ const config = {
                                 localIdentName: !prod ? '[local]___[hash:base64:5]' : '[hash:base64:5]'
                             }
                         }
-                    },
-                    `sass-loader`
+                    }
                 ]
             }
         ]
@@ -123,7 +111,6 @@ const config = {
                 {from: 'public/manifest.json'},
                 {from: 'public/sitemap.xml'},
                 {from: 'public/robots.txt'},
-                {from: 'public/.well-known', to: '.well-known/[name][ext]'},
                 {from: 'public/images/*.*', to: 'images/[name][ext]'},
                 {from: 'public/screenshots/*.*', to: 'screenshots/[name][ext]'},
                 {from: 'public/images/icon/*.*', to: 'images/icon/[name][ext]'}
