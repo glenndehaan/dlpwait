@@ -411,6 +411,7 @@ class App extends Component {
                     <Router onChange={(e) => this.routerUpdate(e)}>
                         <Park path="/:park" parks={parks} attractions={attractions} entertainment={entertainment} restaurants={restaurants} weather={weather} sort={sort} search={search} view={view} favourites={favourites} menu={menu} debug={debug} gps={gps} error={error} reloadFavourites={() => this.reloadFavourites()} switchViews={(view) => this.switchViews(view)}/>
                         <Redirect path="/" to="/disneyland-park"/>
+                        <Redirect path="/walt-disney-studios-park" to="/disney-adventure-world"/>
                     </Router>
                 </main>
                 {!menu && view !== 'weather' &&
